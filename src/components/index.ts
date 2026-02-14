@@ -12,4 +12,5 @@ export { AnimatedText, ShatterText, PaintReveal } from './AnimatedText';
 export { LiquidBackground } from './LiquidBackground';
 export { PageTransition } from './PageTransition';
 export { GyroscopeTilt } from './GyroscopeTilt';
+export { GyroscopeScroll } from './GyroscopeScroll';
 export { ShakeToClick } from './ShakeToClick';

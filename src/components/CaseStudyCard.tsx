@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import type { CaseStudy } from '@/types';
 import { cn } from '@/utils';
 import { TiltCard } from './TiltCard';
-import { GyroscopeTilt } from './GyroscopeTilt';
 
 interface CaseStudyCardProps {
   study: CaseStudy;
@@ -52,7 +51,7 @@ export function CaseStudyCard({ study, featured = false }: CaseStudyCardProps) {
 
               {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-300" />
-            </GyroscopeTilt>
+            </div>
 
             {/* Content Overlay */}
             <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">

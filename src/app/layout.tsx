@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { Header, Footer, MagneticCursor, ParticleNetwork, LiquidBackground, ShakeToClick } from '@/components';
+import { Header, Footer, MagneticCursor, ParticleNetwork, LiquidBackground, ShakeToClick, GyroscopeScroll } from '@/components';
 import './globals.css';
 
 const geistSans = Geist({
@@ -37,6 +37,7 @@ export default function RootLayout({
         <LiquidBackground />
         <ParticleNetwork />
         <ShakeToClick />
+        <GyroscopeScroll />
         <Header />
         <main className="min-h-screen relative z-10">{children}</main>
         <Footer />
