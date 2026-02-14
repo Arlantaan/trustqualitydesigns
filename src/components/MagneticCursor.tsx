@@ -6,8 +6,21 @@ export function MagneticCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [trail, setTrail] = useState<Array<{ x: number; y: number; id: number }>>([]);
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(true);
 
   useEffect(() => {
+    // Check if it's a touch device
+    const checkTouchDevice = () => {
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsTouchDevice(hasTouch || isMobile);
+    };
+
+    checkTouchDevice();
+
+    // Don't add event listeners if it's a touch device
+    if (isTouchDevice) return;
+
     let trailId = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -30,9 +43,10 @@ export function MagneticCursor() {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
+  }, [isTouchDevice]);
 
-  if (!isVisible) return null;
+  // Don't render on touch devices
+  if (isTouchDevice || !isVisible) return null;
 
   return (
     <>

@@ -12,6 +12,7 @@ export function GyroscopeTilt({ children, intensity = 15, className = '' }: Gyro
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isSupported, setIsSupported] = useState(false);
   const [permission, setPermission] = useState<'granted' | 'denied' | 'prompt'>('prompt');
+  const [permissionRequested, setPermissionRequested] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export function GyroscopeTilt({ children, intensity = 15, className = '' }: Gyro
         if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
           setPermission('prompt');
         } else {
-          // Android or older iOS
+          // Android or older iOS - start immediately
           setPermission('granted');
           startListening();
         }
@@ -45,6 +46,9 @@ export function GyroscopeTilt({ children, intensity = 15, className = '' }: Gyro
   }, []);
 
   const requestPermission = async () => {
+    if (permissionRequested) return;
+    setPermissionRequested(true);
+
     if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
       try {
         const response = await (DeviceOrientationEvent as any).requestPermission();
