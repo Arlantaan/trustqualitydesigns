@@ -130,19 +130,12 @@ export function Header() {
           className="md:hidden flex flex-col gap-1.5 focus:outline-none z-[60] relative"
           aria-label="Toggle menu"
         >
-          {/* Three lines that animate into X shape */}
+          {/* Two lines that animate into X shape */}
           <span
             className={cn(
               'w-6 h-0.5 transition-all duration-300',
               isMobileMenuOpen ? 'bg-white' : 'bg-white',
-              isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
-            )}
-          />
-          <span
-            className={cn(
-              'w-6 h-0.5 transition-all duration-300',
-              isMobileMenuOpen ? 'bg-white' : 'bg-white',
-              isMobileMenuOpen ? 'opacity-0' : ''
+              isMobileMenuOpen ? 'rotate-45 translate-y-1' : ''
             )}
           />
           <span
