@@ -29,7 +29,7 @@ export function CaseStudyCard({ study, featured = false }: CaseStudyCardProps) {
             )}
           >
             {/* Media Container */}
-            <GyroscopeTilt intensity={20} className={cn('relative overflow-hidden bg-gray-900', featured ? 'aspect-video' : 'aspect-square')}>
+            <div className={cn('relative overflow-hidden bg-gray-900', featured ? 'aspect-video' : 'aspect-square')}>
               {study.featuredVideo ? (
                 <video
                   src={study.featuredVideo}
