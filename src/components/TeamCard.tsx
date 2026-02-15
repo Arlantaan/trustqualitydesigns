@@ -45,11 +45,11 @@ export function TeamCard({
   };
 
   return (
-    <motion.div variants={itemVariants}>
+    <motion.div variants={itemVariants} className="h-full">
       <TiltCard
         intensity={7}
         className={cn(
-          'group rounded-2xl overflow-hidden bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur border border-red-800/30 hover:shadow-2xl hover:shadow-red-500/40 hover:border-red-500 transition-all',
+          'group rounded-2xl overflow-hidden bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur border border-red-800/30 hover:shadow-2xl hover:shadow-red-500/40 hover:border-red-500 transition-all h-full flex flex-col',
           className
         )}
       >
@@ -67,12 +67,14 @@ export function TeamCard({
         </GyroscopeTilt>
       </Link>
 
-      <div className="p-6">
-        <h3 className="text-lg font-semibold text-white group-hover:text-red-300 transition-colors">
-          {name}
-        </h3>
-        <p className="text-sm font-medium text-red-400 mt-1">{position}</p>
-        <p className="text-sm text-gray-300 mt-3 line-clamp-2">{bio}</p>
+      <div className="p-6 flex-grow flex flex-col">
+        <div className="flex-grow">
+          <h3 className="text-lg font-semibold text-white group-hover:text-red-300 transition-colors">
+            {name}
+          </h3>
+          <p className="text-sm font-medium text-red-400 mt-1">{position}</p>
+          <p className="text-sm text-gray-300 mt-3 line-clamp-2">{bio}</p>
+        </div>
 
         {socialLinks && socialLinks.length > 0 && (
           <div className="flex gap-3 mt-4">

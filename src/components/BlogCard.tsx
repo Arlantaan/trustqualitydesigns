@@ -35,16 +35,16 @@ export function BlogCard({
   };
 
   return (
-    <motion.div variants={itemVariants}>
+    <motion.div variants={itemVariants} className="h-full">
       <TiltCard
         intensity={5}
         className={cn(
-          'group relative rounded-xl border border-red-800/30 bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur p-6 transition-all hover:shadow-2xl hover:shadow-red-500/40 hover:border-red-500',
+          'group relative rounded-xl border border-red-800/30 bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur p-6 transition-all hover:shadow-2xl hover:shadow-red-500/40 hover:border-red-500 h-full flex flex-col',
           featured && 'md:col-span-2 bg-gradient-to-br from-red-900/60 to-red-950/60',
           className
         )}
       >
-        <div className="flex h-full flex-col justify-between">
+        <div className="flex-grow">
           <div>
             <p className="text-sm font-medium text-red-400 mb-3">
               {new Date(publishedAt).toLocaleDateString('en-US', {
@@ -62,16 +62,16 @@ export function BlogCard({
           <p className="mt-3 text-gray-600 line-clamp-2">
             {excerpt}
           </p>
+          </div>
         </div>
 
         <Link
           href={`/blog/${slug}`}
-          className="mt-6 inline-flex items-center gap-2 text-red-600 font-medium hover:gap-3 transition-all"
+          className="mt-6 inline-flex items-center gap-2 text-red-400 font-semibold hover:gap-3 transition-all"
         >
           Read Article
           <ArrowRight className="w-4 h-4" />
         </Link>
-      </div>
       </TiltCard>
     </motion.div>
   );

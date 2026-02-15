@@ -1,21 +1,34 @@
+'use client';
+
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { Award, Users, TrendingUp, Target } from 'lucide-react';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'About | Trust Quality',
-  description: 'Award-winning branding and signage construction company creating impactful brand identities and premium signages.',
-  openGraph: {
-    title: 'About | Trust Quality',
-    description: 'Award-winning branding and signage construction company creating impactful brand identities and premium signages.',
-    type: 'website',
-    url: 'https://trustquality.com/about',
-  },
-};
+// Simple fade-in animation
+function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'center center'],
+  });
+  
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [40, 0]);
+  
+  return (
+    <motion.div ref={ref} style={{ opacity, y }} transition={{ delay }}>
+      {children}
+    </motion.div>
+  );
+}
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-black">
       {/* Header Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-gray-950">
+      <FadeIn>
+        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
@@ -27,55 +40,59 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* Story Section */}
-      <section className="py-20 md:py-32">
+      <FadeIn delay={0.1}>
+        <section className="py-20 md:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-8">Our Story</h2>
           <div className="space-y-6 text-lg text-gray-600">
             <p>
-              Founded in 2010, we started as a branding and signage company with a clear vision: to help businesses stand out with powerful brand identities and premium signage solutions. Over the years, we've become industry leaders, but our core mission remains unchanged.
+              Founded in 2012, Trust Quality Designs emerged from a simple belief: every Gambian business deserves professional branding and quality signage. Starting with a small workshop in Serrekunda, we've grown into The Gambia's trusted partner for brand identity and signage construction.
             </p>
             <p>
-              We believe that great branding is more than aesthetics—it's about creating memorable impressions, building trust, and delivering quality that lasts. From brand strategy to signage construction, every project we undertake is driven by craftsmanship, innovation, and a relentless commitment to excellence.
+              We believe that great branding is more than aesthetics—it's about creating memorable impressions, building trust, and delivering quality that lasts. From brand strategy to signage construction, every project we undertake is driven by expert craftsmanship, weather-resistant materials, and a relentless commitment to excellence.
             </p>
             <p>
-              Today, we've had the privilege of working with over 150 businesses across industries, from small enterprises to major corporations. Our award-winning work and premium signage installations speak for themselves, but our greatest satisfaction comes from seeing our clients succeed.
+              Today, we've had the privilege of serving over 200 businesses across The Gambia, from Banjul's financial district to Kololi's tourist hub. Our work spans hotels, banks, supermarkets, government facilities, and retail establishments. Our greatest satisfaction comes from seeing our clients thrive with professional signage that attracts customers and builds trust.
             </p>
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* Values Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 to-black">
+      <FadeIn delay={0.2}>
+        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 to-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-16 text-white">Our Values</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: 'User-Centered',
-                description: 'We put users at the heart of everything we do. Empathy and research guide our decisions.',
+                title: 'Quality First',
+                description: 'Premium materials and expert craftsmanship in every sign we create. No compromises on quality.',
               },
               {
-                title: 'Data-Driven',
-                description: 'We believe in the power of data and analytics to inform strategy and measure success.',
+                title: 'Local Expertise',
+                description: 'Deep understanding of Gambian climate, culture, and business environment guides our solutions.',
               },
               {
-                title: 'Innovative',
-                description: 'We stay ahead of trends and constantly push boundaries to deliver cutting-edge solutions.',
+                title: 'Reliable Service',
+                description: 'On-time delivery and professional installation you can count on, every single project.',
               },
               {
-                title: 'Collaborative',
-                description: 'We work closely with our clients as true partners, not just vendors.',
+                title: 'Client Partnership',
+                description: 'We work closely with businesses as trusted partners, supporting your growth and success.',
               },
               {
-                title: 'Accountable',
-                description: 'We take responsibility for results and measure success by client outcomes.',
+                title: 'Innovation',
+                description: 'Latest signage technology and design trends adapted for The Gambian market.',
               },
               {
-                title: 'Diverse',
-                description: 'We celebrate different perspectives and backgrounds as essential to great work.',
+                title: 'Fair Pricing',
+                description: 'Transparent pricing and excellent value for investment. Quality signage within your budget.',
               },
             ].map((value) => (
               <div key={value.title} className="bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur rounded-lg p-8 border border-red-800/30">
@@ -86,9 +103,11 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* Approach Section */}
-      <section className="py-20 md:py-32">
+      <FadeIn delay={0.3}>
+        <section className="py-20 md:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-12 text-center">Our Approach</h2>
 
@@ -133,22 +152,24 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* Awards Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-black to-gray-950">
+      <FadeIn delay={0.4}>
+        <section className="py-20 md:py-32 bg-gradient-to-b from-black to-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-16 text-white">Recognition</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {[
-              'Red Dot Award',
-              'Cannes Lions',
-              'AIGA Design Awards',
-              'WebbyAwards',
-              'W3Awards',
-              'CSS Design Awards',
-              'Awwwards',
-              'DesignRush Finalist',
+              'Best Signage Company 2024',
+              'Gambia Chamber of Commerce Excellence Award',
+              'Top 50 Gambian Businesses',
+              'Business Innovation Award',
+              'Quality Service Award',
+              'Client Satisfaction Leader',
+              'Sustainable Business Practice',
+              'Community Impact Award',
             ].map((award) => (
               <div key={award} className="p-6 bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur rounded-lg border border-red-800/30">
                 <p className="font-semibold text-white">{award}</p>
@@ -157,9 +178,11 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-r from-red-600 to-red-800 text-white">
+      <FadeIn delay={0.5}>
+        <section className="py-20 md:py-32 bg-gradient-to-r from-red-600 to-red-800 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Let's Work Together
@@ -175,6 +198,7 @@ export default function AboutPage() {
           </a>
         </div>
       </section>
+      </FadeIn>
     </main>
   );
 }

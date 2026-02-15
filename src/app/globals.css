@@ -29,8 +29,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Custom Cursor - only hide on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
+/* Custom Cursor - only hide default cursor on desktop with mouse */
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
   .custom-cursor,
   .custom-cursor * {
     cursor: none !important;

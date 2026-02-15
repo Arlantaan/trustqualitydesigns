@@ -28,40 +28,42 @@ export function ServiceCard({
   };
 
   return (
-    <motion.div variants={itemVariants}>
+    <motion.div variants={itemVariants} className="h-full">
       <TiltCard
         intensity={6}
         className={cn(
-          'group relative rounded-xl border border-red-800/30 bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur-sm p-8 hover:shadow-2xl hover:shadow-red-500/40 hover:border-red-500 transition-all',
+          'group relative rounded-xl border border-red-800/30 bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur-sm p-8 hover:shadow-2xl hover:shadow-red-500/40 hover:border-red-500 transition-all h-full flex flex-col',
           className
         )}
       >
-        <h3 className="text-xl font-semibold text-white group-hover:text-red-300 transition-colors">
-          {name}
-        </h3>
-      <p className="mt-3 text-gray-300">{description}</p>
+        <div className="flex-grow">
+          <h3 className="text-xl font-semibold text-white group-hover:text-red-300 transition-colors">
+            {name}
+          </h3>
+          <p className="mt-3 text-gray-300">{description}</p>
 
-      {features && features.length > 0 && (
-        <ul className="mt-6 space-y-2">
-          {features.map((feature, index) => (
-            <li
-              key={index}
-              className="flex items-start gap-2 text-sm text-gray-300"
-            >
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-red-600 flex-shrink-0" />
-              {feature}
-            </li>
-          ))}
-        </ul>
-      )}
+          {features && features.length > 0 && (
+            <ul className="mt-6 space-y-2">
+              {features.map((feature, index) => (
+                <li
+                  key={index}
+                  className="flex items-start gap-2 text-sm text-gray-300"
+                >
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-red-600 flex-shrink-0" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-      <Link
-        href={`/services/${slug}`}
-        className="mt-6 inline-flex items-center gap-2 text-red-600 font-medium hover:gap-3 transition-all"
-      >
-        Learn More
-        <ArrowRight className="w-4 h-4" />
-      </Link>
+        <Link
+          href={`/services/${slug}`}
+          className="mt-6 inline-flex items-center gap-2 text-red-400 font-semibold hover:text-red-300 hover:gap-3 transition-all"
+        >
+          Learn More
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </TiltCard>
     </motion.div>
   );

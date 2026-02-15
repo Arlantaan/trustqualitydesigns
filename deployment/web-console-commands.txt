@@ -1,0 +1,27 @@
+# ============================================
+# Hetzner Web Console Deployment Guide
+# ============================================
+
+YOUR IP IS BLOCKED - USE WEB CONSOLE INSTEAD!
+
+## STEP-BY-STEP INSTRUCTIONS:
+
+1. Go to: https://robot.hetzner.com
+2. Login with your Hetzner credentials
+3. Click on your server (46.225.69.136)
+4. Click "Console" or "noVNC" button (top right)
+5. Login as: root
+6. Copy ALL commands below and paste into console
+
+## COMMANDS TO RUN (Copy everything below):
+
+pm2 delete tqd-website 2>/dev/null || true && pm2 delete all 2>/dev/null || true && pm2 flush && pm2 save --force && rm -rf /var/www/tqd && mkdir -p /var/www/tqd && systemctl reload nginx && echo "✅ Cleaned!" && cd /var/www/tqd && git clone https://github.com/arlantaan/trustqualitydesigns.git . && npm install --production && npm run build && pm2 start npm --name tqd-website -- start && pm2 save && echo "✅ DEPLOYED!" && pm2 status
+
+## THAT'S IT! 
+
+Your website will be live at: http://46.225.69.136
+
+## Alternative: Use Mobile Hotspot
+
+If you prefer, connect to mobile hotspot and run:
+  .\deployment\clean-and-deploy.ps1

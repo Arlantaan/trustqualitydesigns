@@ -2,24 +2,33 @@
 
 import { useEffect, useState } from 'react';
 
+// Check if device is touch-enabled BEFORE component renders
+const isTouchDevice = () => {
+  if (typeof window === 'undefined') return true; // Default to true on server
+  
+  // Multiple layers of detection
+  const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const isSmallScreen = window.innerWidth < 1024;
+  const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  const hasNoHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
+  
+  return hasTouch || isMobileUA || isSmallScreen || isCoarsePointer || hasNoHover;
+};
+
 export function MagneticCursor() {
+  // Return early if touch device - don't even set up state
+  if (isTouchDevice()) return null;
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [trail, setTrail] = useState<Array<{ x: number; y: number; id: number }>>([]);
   const [isVisible, setIsVisible] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(true);
 
   useEffect(() => {
-    // Check if it's a touch device
-    const checkTouchDevice = () => {
-      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      setIsTouchDevice(hasTouch || isMobile);
-    };
-
-    checkTouchDevice();
-
-    // Don't add event listeners if it's a touch device
-    if (isTouchDevice) return;
+    // Double-check on mount - don't set up listeners on touch devices
+    if (isTouchDevice()) {
+      return;
+    }
 
     let trailId = 0;
 
@@ -43,16 +52,16 @@ export function MagneticCursor() {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [isTouchDevice]);
+  }, []);
 
-  // Don't render on touch devices
-  if (isTouchDevice || !isVisible) return null;
+  // Don't render if not visible
+  if (!isVisible) return null;
 
   return (
     <>
-      {/* Custom Cursor */}
+      {/* Custom Cursor - DESKTOP ONLY */}
       <div
-        className="fixed pointer-events-none z-[9999] mix-blend-difference"
+        className="hidden lg:block fixed pointer-events-none z-[9999] mix-blend-difference"
         style={{
           left: position.x,
           top: position.y,
@@ -62,11 +71,11 @@ export function MagneticCursor() {
         <div className="w-6 h-6 rounded-full bg-red-500 opacity-80 blur-sm animate-pulse" />
       </div>
 
-      {/* Trail Particles */}
+      {/* Trail Particles - DESKTOP ONLY */}
       {trail.map((particle, index) => (
         <div
           key={particle.id}
-          className="fixed pointer-events-none z-[9998]"
+          className="hidden lg:block fixed pointer-events-none z-[9998]"
           style={{
             left: particle.x,
             top: particle.y,

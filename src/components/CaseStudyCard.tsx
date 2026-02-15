@@ -19,6 +19,7 @@ export function CaseStudyCard({ study, featured = false }: CaseStudyCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
+      className="h-full"
     >
       <TiltCard intensity={8}>
         <Link href={`/work/${study.slug}`}>
