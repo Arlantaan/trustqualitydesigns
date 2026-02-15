@@ -82,14 +82,19 @@ export default function ServicesPage() {
     <main className="min-h-screen bg-black">
       {/* Header Section */}
       <FadeIn>
-        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto">
-              <h1 className="text-5xl md:text-7xl font-black text-white mb-6">
+        <section className="relative py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black overflow-hidden">
+          {/* Animated background */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-red-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-600 mb-6">
                 Our Services
               </h1>
-              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                Professional branding and premium signage solutions that elevate your business presence across The Gambia.
+              <p className="text-2xl text-red-200 leading-relaxed">
+                Premium branding and signage solutions that transform your business presence.
               </p>
             </div>
           </div>
@@ -98,20 +103,20 @@ export default function ServicesPage() {
 
       {/* Why Choose Us */}
       <FadeIn delay={0.1}>
-        <section className="py-20 bg-black">
+        <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">Why Choose Trust Quality Designs</h2>
+            <h2 className="text-5xl md:text-6xl font-black text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Why Choose Us</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { icon: Award, title: 'Award-Winning', description: 'Recognized for excellence in branding and signage construction across The Gambia.' },
-                { icon: Users, title: 'Expert Team', description: 'Skilled designers and craftsmen dedicated to bringing your vision to life with precision.' },
-                { icon: Zap, title: 'Fast Delivery', description: 'Efficient turnaround times without compromising on quality or craftsmanship.' },
+                { icon: Award, title: 'Award-Winning Excellence', description: 'Recognized for outstanding branding and signage construction across The Gambia.' },
+                { icon: Users, title: 'Expert Craftsmen', description: 'Skilled designers and builders dedicated to bringing your vision to life with precision.' },
+                { icon: Zap, title: 'Fast Turnaround', description: 'Efficient delivery times without compromising on quality or attention to detail.' },
               ].map((item, i) => (
-                <div key={i} className="bg-gray-900 p-8 rounded-2xl border border-gray-800 hover:border-red-500 transition-all duration-300">
-                  <item.icon className="w-12 h-12 text-red-500 mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{item.description}</p>
+                <div key={i} className="bg-gradient-to-br from-gray-900 to-gray-950 p-10 rounded-3xl border border-red-900/30 hover:border-red-500 hover:shadow-2xl hover:shadow-red-500/20 transition-all duration-300 hover:scale-105">
+                  <item.icon className="w-14 h-14 text-red-500 mb-6" />
+                  <h3 className="text-2xl font-bold text-red-400 mb-4">{item.title}</h3>
+                  <p className="text-gray-300 leading-relaxed">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -121,9 +126,9 @@ export default function ServicesPage() {
 
       {/* Services Grid */}
       <FadeIn delay={0.2}>
-        <section className="py-20">
+        <section className="py-20 bg-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">Our Service Offerings</h2>
+            <h2 className="text-5xl md:text-6xl font-black text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">What We Offer</h2>
             <ServiceGrid services={mockServices} />
           </div>
         </section>
@@ -131,11 +136,14 @@ export default function ServicesPage() {
 
       {/* Process Section */}
       <FadeIn delay={0.3}>
-        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 to-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">Our Process</h2>
+        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-black relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 className="text-5xl md:text-6xl font-black text-center mb-20 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">How We Work</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
               {[
                 { number: '01', title: 'Consultation', description: 'Free consultation to understand your brand vision and signage requirements.' },
                 { number: '02', title: 'Design', description: 'Custom design concepts that perfectly reflect your brand identity and goals.' },
@@ -143,9 +151,9 @@ export default function ServicesPage() {
                 { number: '04', title: 'Installation', description: 'Professional installation with ongoing maintenance and support services.' },
               ].map((step) => (
                 <div key={step.number} className="text-center group">
-                  <div className="text-6xl md:text-7xl font-black text-red-500 mb-6 group-hover:scale-110 transition-transform duration-300">{step.number}</div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-3 text-white">{step.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{step.description}</p>
+                  <div className="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-br from-red-500 to-red-700 mb-6 group-hover:scale-125 transition-transform duration-300">{step.number}</div>
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-red-400">{step.title}</h3>
+                  <p className="text-gray-300 text-lg leading-relaxed">{step.description}</p>
                 </div>
               ))}
             </div>
