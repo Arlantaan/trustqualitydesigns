@@ -14,21 +14,14 @@ interface CaseStudyCardProps {
 
 export function CaseStudyCard({ study, featured = false }: CaseStudyCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="h-full"
-    >
-      <TiltCard intensity={8}>
-        <Link href={`/work/${study.slug}`}>
-          <div
-            className={cn(
-              'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-red-500/30',
-              featured ? 'mb-12 ring-2 ring-red-500/50' : ''
-            )}
-          >
+    <div className="h-full">
+      <Link href={`/work/${study.slug}`}>
+        <div
+          className={cn(
+            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-red-500/30',
+            featured ? 'mb-12 ring-2 ring-red-500/50' : ''
+          )}
+        >
             {/* Media Container */}
             <div className={cn('relative overflow-hidden bg-gray-900', featured ? 'aspect-video' : 'aspect-square')}>
               {study.featuredVideo ? (
@@ -66,8 +59,7 @@ export function CaseStudyCard({ study, featured = false }: CaseStudyCardProps) {
             </div>
           </div>
         </Link>
-      </TiltCard>
-    </motion.div>
+    </div>
   );
 }
 
