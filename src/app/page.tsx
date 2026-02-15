@@ -261,7 +261,7 @@ export default function Home() {
                 <div className="text-6xl md:text-7xl font-black bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-transparent bg-clip-text mb-6 drop-shadow-2xl leading-none">
                   {stat.number}
                 </div>
-                <p className="text-gray-300 text-lg font-medium leading-tight">{stat.label}</p>
+                <p className="text-red-400 text-lg font-medium leading-tight">{stat.label}</p>
               </div>
             ))}
           </div>
