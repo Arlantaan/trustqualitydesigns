@@ -243,32 +243,6 @@ export default function Home() {
       </section>
       </FadeInSection>
 
-      {/* Stats Section */}
-      <FadeInSection delay={0.1}>
-        <section className="py-32 bg-gradient-to-br from-gray-950 via-red-950 to-black relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2djhhNCA0IDAgMCAxLTQgNEgyMGE0IDQgMCAwIDEtNC00di04YTQgNCAwIDAgMSA0LTRoMTJhNCA0IDAgMCAxIDQgNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30" />
-        
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-            {[
-              { number: '200+', label: 'Signs Delivered' },
-              { number: '95%', label: 'Client Satisfaction' },
-              { number: '50+', label: 'Business Partners' },
-              { number: '10+', label: 'Years Experience' },
-            ].map((stat, i) => (
-              <div key={i} className="flex flex-col items-center text-center group hover:transform hover:scale-110 transition-all duration-300 p-6">
-                <div className="text-6xl md:text-7xl font-black bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-transparent bg-clip-text mb-6 drop-shadow-2xl leading-none">
-                  {stat.number}
-                </div>
-                <p className="text-red-400 text-lg font-medium leading-tight">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      </FadeInSection>
-
       {/* Client Logos */}
       <FadeInSection delay={0.15}>
         <LogoMarquee />
