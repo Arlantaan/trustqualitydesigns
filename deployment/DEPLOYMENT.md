@@ -10,7 +10,7 @@
 
 ## 📋 Prerequisites
 - SSH access to server (root@46.225.69.136)
-- Server password: `CvttApsLiTHuAi7JVsmU`
+- Server password: `ixs3nNeuUsuTr9KRevNu`
 - Git installed locally (optional)
 - Node.js 18+ installed locally
 
@@ -21,7 +21,7 @@
 ### Step 1: Connect to server
 ```bash
 ssh root@46.225.69.136
-# Password: CvttApsLiTHuAi7JVsmU
+# Password: ixs3nNeuUsuTr9KRevNu
 ```
 
 ### Step 2: Upload and run setup script
