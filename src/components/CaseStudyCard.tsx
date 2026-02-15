@@ -15,13 +15,14 @@ interface CaseStudyCardProps {
 export function CaseStudyCard({ study, featured = false }: CaseStudyCardProps) {
   return (
     <div className="h-full">
-      <Link href={`/work/${study.slug}`}>
-        <div
-          className={cn(
-            'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-red-500/30',
-            featured ? 'mb-12 ring-2 ring-red-500/50' : ''
-          )}
-        >
+      <TiltCard intensity={8}>
+        <Link href={`/work/${study.slug}`}>
+          <div
+            className={cn(
+              'group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-red-500/30',
+              featured ? 'mb-12 ring-2 ring-red-500/50' : ''
+            )}
+          >
             {/* Media Container */}
             <div className={cn('relative overflow-hidden bg-gray-900', featured ? 'aspect-video' : 'aspect-square')}>
               {study.featuredVideo ? (
@@ -59,6 +60,7 @@ export function CaseStudyCard({ study, featured = false }: CaseStudyCardProps) {
             </div>
           </div>
         </Link>
+      </TiltCard>
     </div>
   );
 }
