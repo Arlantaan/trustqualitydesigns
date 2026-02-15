@@ -68,8 +68,8 @@ export function ShatterText({ children, className = '' }: ShatterTextProps) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.015,
-        delayChildren: 0.1,
+        staggerChildren: 0.02,
+        delayChildren: 0.15,
       },
     },
   };
@@ -77,9 +77,9 @@ export function ShatterText({ children, className = '' }: ShatterTextProps) {
   const child = {
     hidden: {
       opacity: 0,
-      y: 60,
+      y: 40,
       rotateZ: 0,
-      scale: 0.3,
+      scale: 0.5,
     },
     visible: {
       opacity: 1,
@@ -88,9 +88,9 @@ export function ShatterText({ children, className = '' }: ShatterTextProps) {
       scale: 1,
       transition: {
         type: 'spring',
-        damping: 15,
-        stiffness: 300,
-        mass: 0.5,
+        damping: 18,
+        stiffness: 250,
+        mass: 0.6,
       },
     },
   };
