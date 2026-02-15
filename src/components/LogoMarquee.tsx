@@ -11,12 +11,12 @@ interface LogoMarqueeProps {
 
 export function LogoMarquee({ 
   logos = [
+    '/images/logos/ecobank-the-pan-african-bank-loho-HD.png',
     '/images/logos/octopus-tech-logo-rebranded-white.png',
-    '/images/logos/Untitled-2.png',
+    '/images/logos/ecobank-the-pan-african-bank-loho-HD.png',
     '/images/logos/octopus-tech-logo-rebranded-white.png',
-    '/images/logos/Untitled-2.png',
+    '/images/logos/ecobank-the-pan-african-bank-loho-HD.png',
     '/images/logos/octopus-tech-logo-rebranded-white.png',
-    '/images/logos/Untitled-2.png',
   ],
   speed = 30 
 }: LogoMarqueeProps) {
