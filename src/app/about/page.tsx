@@ -28,14 +28,19 @@ export default function AboutPage() {
     <main className="min-h-screen bg-black">
       {/* Header Section */}
       <FadeIn>
-        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+        <section className="relative py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black overflow-hidden">
+          {/* Animated background */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-red-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-600 mb-6">
               About Us
             </h1>
-            <p className="text-xl text-gray-300">
-              We partner with ambitious businesses to create powerful brand identities and construct premium signages that make lasting impressions.
+            <p className="text-2xl text-red-200 leading-relaxed">
+              Building brands and constructing quality signage across The Gambia since 2012.
             </p>
           </div>
         </div>
@@ -44,10 +49,10 @@ export default function AboutPage() {
 
       {/* Story Section */}
       <FadeIn delay={0.1}>
-        <section className="py-20 md:py-32">
+        <section className="py-20 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold mb-8">Our Story</h2>
-          <div className="space-y-6 text-lg text-gray-600">
+          <h2 className="text-5xl md:text-6xl font-black mb-12 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Our Story</h2>
+          <div className="space-y-8 text-xl text-red-100 leading-relaxed">
             <p>
               Founded in 2012, Trust Quality Designs emerged from a simple belief: every Gambian business deserves professional branding and quality signage. Starting with a small workshop in Serrekunda, we've grown into The Gambia's trusted partner for brand identity and signage construction.
             </p>
@@ -64,11 +69,11 @@ export default function AboutPage() {
 
       {/* Values Section */}
       <FadeIn delay={0.2}>
-        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 to-black">
+        <section className="py-20 md:py-32 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">Our Values</h2>
+          <h2 className="text-5xl md:text-6xl font-black text-center mb-20 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Our Values</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 title: 'Quality First',
@@ -95,9 +100,9 @@ export default function AboutPage() {
                 description: 'Transparent pricing and excellent value for investment. Quality signage within your budget.',
               },
             ].map((value) => (
-              <div key={value.title} className="bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur rounded-lg p-8 border border-red-800/30">
-                <h3 className="text-xl font-semibold mb-3 text-white">{value.title}</h3>
-                <p className="text-gray-300">{value.description}</p>
+              <div key={value.title} className="bg-gradient-to-br from-gray-900 to-gray-950 rounded-3xl p-10 border border-red-900/30 hover:border-red-500 hover:shadow-xl hover:shadow-red-500/20 transition-all hover:scale-105">
+                <h3 className="text-2xl font-bold mb-4 text-red-400">{value.title}</h3>
+                <p className="text-gray-300 text-lg leading-relaxed">{value.description}</p>
               </div>
             ))}
           </div>
@@ -107,9 +112,9 @@ export default function AboutPage() {
 
       {/* Approach Section */}
       <FadeIn delay={0.3}>
-        <section className="py-20 md:py-32">
+        <section className="py-20 md:py-32 bg-gradient-to-b from-black via-red-950/20 to-black">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold mb-12 text-center">Our Approach</h2>
+          <h2 className="text-5xl md:text-6xl font-black mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Our Approach</h2>
 
           <div className="space-y-12">
             {[
@@ -139,13 +144,13 @@ export default function AboutPage() {
                 description: 'After launch, we monitor performance, gather user feedback, and continuously optimize. We believe great design is never truly finished.',
               },
             ].map((step) => (
-              <div key={step.number} className="flex gap-8">
+              <div key={step.number} className="flex gap-8 group hover:scale-105 transition-transform">
                 <div className="flex-shrink-0">
-                  <div className="text-5xl font-bold text-red-600">{step.number}</div>
+                  <div className="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-br from-red-400 to-red-600">{step.number}</div>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold mb-3">{step.title}</h3>
-                  <p className="text-lg text-gray-600">{step.description}</p>
+                  <h3 className="text-2xl font-bold mb-3 text-red-400">{step.title}</h3>
+                  <p className="text-lg text-gray-300 leading-relaxed">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -156,9 +161,9 @@ export default function AboutPage() {
 
       {/* Awards Section */}
       <FadeIn delay={0.4}>
-        <section className="py-20 md:py-32 bg-gradient-to-b from-black to-gray-950">
+        <section className="py-20 md:py-32 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">Recognition</h2>
+          <h2 className="text-5xl md:text-6xl font-black text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Recognition</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {[
@@ -171,8 +176,8 @@ export default function AboutPage() {
               'Sustainable Business Practice',
               'Community Impact Award',
             ].map((award) => (
-              <div key={award} className="p-6 bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur rounded-lg border border-red-800/30">
-                <p className="font-semibold text-white">{award}</p>
+              <div key={award} className="p-8 bg-gradient-to-br from-gray-900 to-gray-950 rounded-3xl border border-red-900/30 hover:border-red-500 hover:shadow-xl hover:shadow-red-500/20 transition-all hover:scale-105">
+                <p className="font-bold text-red-300 text-lg">{award}</p>
               </div>
             ))}
           </div>
@@ -182,17 +187,22 @@ export default function AboutPage() {
 
       {/* CTA Section */}
       <FadeIn delay={0.5}>
-        <section className="py-20 md:py-32 bg-gradient-to-r from-red-600 to-red-800 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <section className="py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black relative overflow-hidden">
+          {/* Animated background */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
+          </div>
+          
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h2 className="text-5xl md:text-6xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">
             Let's Work Together
           </h2>
-          <p className="text-lg text-red-100 mb-8">
+          <p className="text-2xl text-red-200 mb-10 leading-relaxed">
             Interested in partnering with us? We'd love to hear about your project.
           </p>
           <a
             href="/contact"
-            className="inline-block px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-red-600 transition-all"
+            className="inline-block px-12 py-6 bg-white text-red-600 font-black text-xl rounded-full hover:scale-110 transition-all shadow-2xl shadow-red-500/50 hover:shadow-red-500/70"
           >
             Get in Touch
           </a>

@@ -61,15 +61,21 @@ const mockBlogPosts = [
 
 export default function BlogPage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-black">
       {/* Header Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-gray-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+      <section className="relative py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-red-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-600 mb-6">
               Blog
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-2xl text-red-200 leading-relaxed">
               Insights, trends, and best practices in design, technology, and digital strategy.
             </p>
           </div>
@@ -77,28 +83,33 @@ export default function BlogPage() {
       </section>
 
       {/* Blog Posts Section */}
-      <section className="py-20 md:py-32">
+      <section className="py-20 md:py-32 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <BlogGrid posts={mockBlogPosts} />
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-r from-red-600 to-red-800 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section className="py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
+        </div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h2 className="text-5xl md:text-6xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">
             Subscribe to Our Newsletter
           </h2>
-          <p className="text-lg text-red-100 mb-8">
+          <p className="text-2xl text-red-200 mb-10 leading-relaxed">
             Get the latest insights delivered to your inbox.
           </p>
           <div className="flex gap-3 max-w-md mx-auto">
             <input
               type="email"
               placeholder="your@email.com"
-              className="flex-1 px-4 py-3 rounded-lg bg-white/90 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+              className="flex-1 px-6 py-4 rounded-full bg-gray-900 text-red-100 placeholder-gray-500 border border-red-900/30 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-lg"
             />
-            <button className="px-6 py-3 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-red-600 transition-all">
+            <button className="px-8 py-4 bg-white text-red-600 font-black rounded-full hover:scale-110 transition-all shadow-xl shadow-red-500/50">
               Subscribe
             </button>
           </div>
