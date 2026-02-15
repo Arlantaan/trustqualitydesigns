@@ -6,14 +6,12 @@ import { useEffect, useState } from 'react';
 const isTouchDevice = () => {
   if (typeof window === 'undefined') return true; // Default to true on server
   
-  // Multiple layers of detection
+  // Only check for actual touch capability, not screen size
   const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  const isSmallScreen = window.innerWidth < 1024;
   const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-  const hasNoHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
   
-  return hasTouch || isMobileUA || isSmallScreen || isCoarsePointer || hasNoHover;
+  return hasTouch || isMobileUA || isCoarsePointer;
 };
 
 export function MagneticCursor() {
