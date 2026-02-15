@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 const footerLinks = {
   company: [
@@ -31,7 +32,11 @@ const socialLinks = [
 ];
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
+  const [currentYear, setCurrentYear] = useState(2026);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="bg-gray-900 text-gray-400">
