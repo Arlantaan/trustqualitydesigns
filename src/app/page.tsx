@@ -248,8 +248,7 @@ export default function Home() {
         <LogoMarquee />
       </FadeInSection>
 
-      {/* News & Updates - Hidden until content is ready */}
-      {/* 
+      {/* News & Updates */}
       <FadeInSection delay={0.2}>
         <NewsUpdates 
           items={mockNews} 
@@ -257,10 +256,9 @@ export default function Home() {
           subtitle="Stay informed about our recent projects and achievements"
         />
       </FadeInSection>
-      */}
 
       {/* Marketing CTA */}
-      <FadeInSection delay={0.2}>
+      <FadeInSection delay={0.25}>
         <MarketingCTA />
       </FadeInSection>
     </>
