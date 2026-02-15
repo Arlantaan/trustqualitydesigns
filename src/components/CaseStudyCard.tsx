@@ -40,6 +40,7 @@ export function CaseStudyCard({ study, featured = false }: CaseStudyCardProps) {
                   src={study.featuredImage}
                   alt={study.title}
                   fill
+                  priority={featured}
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               )}
