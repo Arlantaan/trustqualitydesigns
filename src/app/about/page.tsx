@@ -1,34 +1,16 @@
-'use client';
-
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
 import { Award, Users, TrendingUp, Target } from 'lucide-react';
 import type { Metadata } from 'next';
 
-// Simple fade-in animation
-function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'center center'],
-  });
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [40, 0]);
-  
-  return (
-    <motion.div ref={ref} style={{ opacity, y }} transition={{ delay }}>
-      {children}
-    </motion.div>
-  );
-}
+export const metadata: Metadata = {
+  title: 'About | Trust Quality Designs',
+  description: 'Building brands and constructing quality signage across The Gambia since 2012.',
+};
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-black">
       {/* Header Section */}
-      <FadeIn>
-        <section className="relative py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black overflow-hidden">
+      <section className="relative py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black overflow-hidden">
           {/* Animated background */}
           <div className="absolute inset-0 opacity-30">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
@@ -45,11 +27,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* Story Section */}
-      <FadeIn delay={0.1}>
-        <section className="py-20 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black">
+      <section className="py-20 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl md:text-6xl font-black mb-12 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Our Story</h2>
           <div className="space-y-8 text-xl text-red-100 leading-relaxed">
@@ -65,11 +45,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* Values Section */}
-      <FadeIn delay={0.2}>
-        <section className="py-20 md:py-32 bg-black">
+      <section className="py-20 md:py-32 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl md:text-6xl font-black text-center mb-20 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Our Values</h2>
 
@@ -108,11 +86,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* Approach Section */}
-      <FadeIn delay={0.3}>
-        <section className="py-20 md:py-32 bg-gradient-to-b from-black via-red-950/20 to-black">
+      <section className="py-20 md:py-32 bg-gradient-to-b from-black via-red-950/20 to-black">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl md:text-6xl font-black mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Our Approach</h2>
 
@@ -157,11 +133,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* Awards Section */}
-      <FadeIn delay={0.4}>
-        <section className="py-20 md:py-32 bg-black">
+      <section className="py-20 md:py-32 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl md:text-6xl font-black text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Recognition</h2>
 
@@ -183,11 +157,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* CTA Section */}
-      <FadeIn delay={0.5}>
-        <section className="py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black relative overflow-hidden">
+      <section className="py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black relative overflow-hidden">
           {/* Animated background */}
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
@@ -208,7 +180,6 @@ export default function AboutPage() {
           </a>
         </div>
       </section>
-      </FadeIn>
     </main>
   );
 }

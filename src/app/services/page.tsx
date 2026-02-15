@@ -1,29 +1,12 @@
-'use client';
-
 import { ServiceGrid } from '@/components';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
 import { CheckCircle, Award, Users, Zap } from 'lucide-react';
 import type { Metadata } from 'next';
 import type { ServiceOffering } from '@/types';
 
-// Simple fade-in animation component
-function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'center center'],
-  });
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [40, 0]);
-  
-  return (
-    <motion.div ref={ref} style={{ opacity, y }} transition={{ delay }}>
-      {children}
-    </motion.div>
-  );
-}
+export const metadata: Metadata = {
+  title: 'Services | Trust Quality Designs',
+  description: 'Premium branding and signage solutions that transform your business presence.',
+};
 
 // Mock services - replace with database calls
 const mockServices: ServiceOffering[] = [
@@ -81,8 +64,7 @@ export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-black">
       {/* Header Section */}
-      <FadeIn>
-        <section className="relative py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black overflow-hidden">
+      <section className="relative py-32 md:py-40 bg-gradient-to-br from-gray-950 via-red-950 to-black overflow-hidden">
           {/* Animated background */}
           <div className="absolute inset-0 opacity-30">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
@@ -99,11 +81,9 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-      </FadeIn>
 
       {/* Why Choose Us */}
-      <FadeIn delay={0.1}>
-        <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black">
+      <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-5xl md:text-6xl font-black text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Why Choose Us</h2>
             
@@ -122,21 +102,17 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-      </FadeIn>
 
       {/* Services Grid */}
-      <FadeIn delay={0.2}>
-        <section className="py-20 bg-black">
+      <section className="py-20 bg-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-5xl md:text-6xl font-black text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">What We Offer</h2>
             <ServiceGrid services={mockServices} />
           </div>
         </section>
-      </FadeIn>
 
       {/* Process Section */}
-      <FadeIn delay={0.3}>
-        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-black relative">
+      <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-black relative">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
           </div>
@@ -159,11 +135,9 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-      </FadeIn>
 
       {/* CTA Section */}
-      <FadeIn delay={0.4}>
-        <section className="py-20 md:py-32 bg-gradient-to-r from-red-600 to-red-800 text-white relative overflow-hidden">
+      <section className="py-20 md:py-32 bg-gradient-to-r from-red-600 to-red-800 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMTZ2OGE0IDQgMCAwIDEtNCA0SDIwYTQgNCAwIDAgMS00LTR2LThhNCA0IDAgMCAxIDQtNGgxMmE0IDQgMCAwIDEgNCA0eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 className="text-3xl md:text-5xl font-black mb-6">
@@ -201,7 +175,6 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-      </FadeIn>
     </main>
   );
 }
