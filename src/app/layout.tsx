@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { Header, Footer, MagneticCursor, ParticleNetwork, LiquidBackground, ShakeToClick, GyroscopeScroll } from '@/components';
+import { Header, Footer, ParticleNetwork, LiquidBackground, ShakeToClick, GyroscopeScroll } from '@/components';
 import './globals.css';
 
 const geistSans = Geist({
@@ -31,9 +31,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-b from-gray-950 via-red-950 to-black text-white custom-cursor`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-b from-gray-950 via-red-950 to-black text-white`}
       >
-        <MagneticCursor />
         <LiquidBackground />
         <ParticleNetwork />
         <ShakeToClick />
