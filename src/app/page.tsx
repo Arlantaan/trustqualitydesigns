@@ -252,13 +252,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             {[
-              { number: '200+', label: 'Signs Delivered', icon: '🎯' },
-              { number: '95%', label: 'Client Satisfaction', icon: '⭐' },
-              { number: '50+', label: 'Business Partners', icon: '🤝' },
-              { number: '10+', label: 'Years Experience', icon: '🏆' },
+              { number: '200+', label: 'Signs Delivered' },
+              { number: '95%', label: 'Client Satisfaction' },
+              { number: '50+', label: 'Business Partners' },
+              { number: '10+', label: 'Years Experience' },
             ].map((stat, i) => (
               <div key={i} className="text-center group hover:transform hover:scale-110 transition-all duration-300">
-                <div className="text-6xl mb-4">{stat.icon}</div>
                 <div className="text-6xl md:text-7xl font-black bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-transparent bg-clip-text mb-4 drop-shadow-2xl">
                   {stat.number}
                 </div>
