@@ -2,7 +2,7 @@
 # Deploy from GitHub to Server
 # ============================================
 
-$SERVER = "root@46.225.69.136"
+$SERVER = "root@91.98.203.172"
 $APP_DIR = "/var/www/tqd"
 
 Write-Host "Deploying from GitHub..." -ForegroundColor Cyan
@@ -41,7 +41,7 @@ echo "Deployment complete!"
 if ($LASTEXITCODE -eq 0) {
     Write-Host ""
     Write-Host "Deployment successful!" -ForegroundColor Green
-    Write-Host "Live at: http://46.225.69.136" -ForegroundColor Cyan
+    Write-Host "Live at: http://91.98.203.172" -ForegroundColor Cyan
     Write-Host ""
 } else {
     Write-Host ""

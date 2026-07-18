@@ -1,20 +1,17 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Linkedin, Twitter, Github } from 'lucide-react';
 import { cn } from '@/utils';
 import type { TeamMember } from '@/types';
 import { TiltCard } from './TiltCard';
-import { GyroscopeTilt } from './GyroscopeTilt';
 
 interface TeamCardProps extends TeamMember {
   className?: string;
 }
 
 export function TeamCard({
-  slug,
   name,
   position,
   avatar,
@@ -22,6 +19,13 @@ export function TeamCard({
   socialLinks,
   className,
 }: TeamCardProps) {
+  const initials = name
+    .split(' ')
+    .map((word) => word[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -53,19 +57,21 @@ export function TeamCard({
           className
         )}
       >
-      <Link href={`/team/${slug}`} className="block">
-        <GyroscopeTilt intensity={15} className="relative h-64 md:h-72 overflow-hidden bg-gray-200">
-          {avatar && (
-            <Image
-              src={avatar}
-              alt={name}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        </GyroscopeTilt>
-      </Link>
+      <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-red-950 to-gray-950 flex items-center justify-center">
+        {avatar ? (
+          <Image
+            src={avatar}
+            alt={name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <span className="font-display text-6xl md:text-7xl tracking-widest text-red-300/80 select-none">
+            {initials}
+          </span>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      </div>
 
       <div className="p-6 flex-grow flex flex-col">
         <div className="flex-grow">

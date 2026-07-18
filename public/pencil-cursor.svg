@@ -1,0 +1,6 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pencil shaft -->
+  <path d="M3 21L21 3M21 3L19.5 1.5C18.7 0.7 17.5 0.7 16.7 1.5L2 16.2V21H6.8L21 6.8" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Pencil tip -->
+  <polygon points="3,21 8,19 6,17" fill="#EF4444"/>
+</svg>

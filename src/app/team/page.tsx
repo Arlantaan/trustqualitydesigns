@@ -1,128 +1,85 @@
 import { TeamGrid } from '@/components';
 import type { Metadata } from 'next';
 import type { TeamMember } from '@/types';
+import { PageHero, SectionReveal } from '@/components';
 
 export const metadata: Metadata = {
-  title: 'Team | Design Agency',
-  description: 'Meet the talented designers, developers, and strategists behind our work.',
+  title: 'Our Team | Trust Quality Design',
+  description: 'Meet the craftsmen, designers, and project managers behind The Gambia\'s leading signage and branding company.',
+  alternates: { canonical: '/team' },
   openGraph: {
-    title: 'Team | Design Agency',
-    description: 'Meet the talented designers, developers, and strategists behind our work.',
+    title: 'Our Team | Trust Quality Design',
+    description: 'Meet the craftsmen, designers, and project managers behind The Gambia\'s leading signage and branding company.',
     type: 'website',
-    url: 'https://designagency.com/team',
+    url: 'https://trustqualitydesign.com/team',
   },
 };
 
-// Mock team members - replace with database calls
 const mockTeamMembers: TeamMember[] = [
   {
     id: '1',
-    name: 'Sarah Johnson',
-    slug: 'sarah-johnson',
-    position: 'Creative Director',
-    bio: 'Visionary designer with 12+ years leading transformative brand experiences.',
-    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80',
-    specialties: ['Brand Strategy', 'Art Direction', 'Visual Design'],
-    socialLinks: [
-      { platform: 'linkedin', url: 'https://linkedin.com/in/sarahj' },
-      { platform: 'twitter', url: 'https://twitter.com/sarahj' },
-    ],
+    name: 'Kumba Jallow',
+    slug: 'kumba-jallow',
+    position: 'Founder & CEO',
+    bio: 'The driving force behind Trust Quality Design since 2012. Over a decade building The Gambia\'s most recognisable signs and brand identities.',
+    avatar: '',
+    specialties: ['Business Strategy', 'Client Relations', 'Brand Vision'],
+    socialLinks: [],
   },
   {
     id: '2',
-    name: 'Michael Chen',
-    slug: 'michael-chen',
-    position: 'Lead Developer',
-    bio: 'Full-stack engineer passionate about scalable, secure web applications.',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80',
-    specialties: ['Web Development', 'Backend Systems', 'DevOps'],
-    socialLinks: [
-      { platform: 'github', url: 'https://github.com/mchen' },
-      { platform: 'linkedin', url: 'https://linkedin.com/in/mchen' },
-    ],
+    name: 'Manjai',
+    slug: 'manjai',
+    position: 'Graphic Designer',
+    bio: 'Creates logo concepts, brand identities, and artwork files ready for production across all print and signage formats.',
+    avatar: '',
+    specialties: ['Logo Design', 'Brand Identity', 'Print Production'],
+    socialLinks: [],
   },
   {
     id: '3',
-    name: 'Emily Rodriguez',
-    slug: 'emily-rodriguez',
-    position: 'UX Researcher',
-    bio: 'User-focused researcher uncovering insights that drive meaningful design decisions.',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80',
-    specialties: ['User Research', 'Information Architecture', 'Usability Testing'],
-    socialLinks: [
-      { platform: 'linkedin', url: 'https://linkedin.com/in/erodriguez' },
-      { platform: 'twitter', url: 'https://twitter.com/erodriguez' },
-    ],
+    name: 'Ebou Jobe',
+    slug: 'ebou-jobe',
+    position: 'Printing Department Manager',
+    bio: 'Oversees all printing operations and production quality, ensuring every job meets TQD\'s standard of precision and durability.',
+    avatar: '',
+    specialties: ['Print Production', 'Quality Control', 'Operations'],
+    socialLinks: [],
   },
   {
     id: '4',
-    name: 'James Park',
-    slug: 'james-park',
-    position: 'Content Strategist',
-    bio: 'Strategic communicator crafting compelling narratives across digital platforms.',
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80',
-    specialties: ['Content Strategy', 'Copywriting', 'SEO'],
-    socialLinks: [
-      { platform: 'linkedin', url: 'https://linkedin.com/in/jpark' },
-      { platform: 'twitter', url: 'https://twitter.com/jpark' },
-    ],
-  },
-  {
-    id: '5',
-    name: 'Lisa Wang',
-    slug: 'lisa-wang',
-    position: 'Product Manager',
-    bio: 'Strategic product leader bridging business goals with user needs.',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80',
-    specialties: ['Product Strategy', 'Project Management', 'Analytics'],
-    socialLinks: [
-      { platform: 'linkedin', url: 'https://linkedin.com/in/lwang' },
-      { platform: 'twitter', url: 'https://twitter.com/lwang' },
-    ],
-  },
-  {
-    id: '6',
-    name: 'David Martinez',
-    slug: 'david-martinez',
-    position: 'Design System Lead',
-    bio: 'Design system architect creating scalable and consistent design solutions.',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80',
-    specialties: ['Design Systems', 'Component Design', 'Documentation'],
-    socialLinks: [
-      { platform: 'github', url: 'https://github.com/dmartinez' },
-      { platform: 'dribbble', url: 'https://dribbble.com/dmartinez' },
-    ],
+    name: 'Fatou Jallow',
+    slug: 'fatou-jallow',
+    position: 'Marketing Manager',
+    bio: 'Drives TQD\'s brand presence and client outreach, connecting businesses across The Gambia with the right signage and branding solutions.',
+    avatar: '',
+    specialties: ['Marketing Strategy', 'Client Outreach', 'Brand Promotion'],
+    socialLinks: [],
   },
 ];
 
 export default function TeamPage() {
   return (
-    <main className="min-h-screen">
-      {/* Header Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-gray-950 via-red-950 to-gray-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-              Team
-            </h1>
-            <p className="text-xl text-gray-300">
-              Meet the talented designers, developers, and strategists behind our most successful projects.
-            </p>
-          </div>
-        </div>
-      </section>
+    <main className="min-h-screen bg-black">
+      <PageHero
+        title="Our Team"
+        subtitle="Meet the talented designers, builders, and strategists behind our most successful projects."
+        image="/images/websitepics/T_Q_D_18.jpg"
+      />
 
       {/* Team Grid */}
-      <section className="py-20 md:py-32">
+      <section className="py-20 md:py-32 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <TeamGrid members={mockTeamMembers} />
         </div>
       </section>
 
       {/* Culture Section */}
-      <section className="py-20 md:py-32 bg-gray-50">
+      <section className="py-20 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold mb-8 text-center">Our Culture</h2>
+          <SectionReveal variant="scale">
+            <h2 className="text-5xl md:text-6xl font-black mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Our Culture</h2>
+          </SectionReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -138,31 +95,37 @@ export default function TeamPage() {
                 title: 'Excellence',
                 description: 'We hold ourselves to the highest standards in everything we do.',
               },
-            ].map((value) => (
-              <div key={value.title} className="bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur rounded-lg p-8 border border-red-800/30">
-                <h3 className="text-xl font-semibold mb-3 text-white">{value.title}</h3>
-                <p className="text-gray-300">{value.description}</p>
+            ].map((value, i) => (
+              <SectionReveal key={value.title} variant="elevate" delay={i * 0.1}>
+              <div className="bg-gradient-to-br from-gray-900 to-gray-950 backdrop-blur rounded-3xl p-10 border border-red-900/30 hover:border-red-500 hover:shadow-xl hover:shadow-red-500/20 transition-all hover:scale-105">
+                <h3 className="text-2xl font-bold mb-4 text-red-400">{value.title}</h3>
+                <p className="text-gray-300 text-lg leading-relaxed">{value.description}</p>
               </div>
+              </SectionReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Careers CTA */}
-      <section className="py-20 md:py-32 bg-gradient-to-r from-red-600 to-red-800 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Join Our Team
-          </h2>
-          <p className="text-lg text-red-100 mb-8">
-            We're always looking for talented people who share our passion for great work.
-          </p>
-          <a
-            href="/careers"
-            className="inline-block px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-red-600 transition-all"
-          >
-            View Open Positions
-          </a>
+      <section className="py-20 md:py-32 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/images/websitepics/T_Q_D_21.jpg" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/75" />
+        </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <SectionReveal variant="scale">
+            <h2 className="text-5xl md:text-6xl font-black mb-6 text-white">Join Our Team</h2>
+            <p className="text-xl text-gray-300 mb-10">
+              We're always looking for talented people who share our passion for great work.
+            </p>
+            <a
+              href="/contact"
+              className="inline-block px-12 py-6 bg-red-600 text-white font-black text-xl rounded-full hover:scale-110 transition-all shadow-2xl shadow-red-500/50 hover:shadow-red-500/70"
+            >
+              Get In Touch
+            </a>
+          </SectionReveal>
         </div>
       </section>
     </main>

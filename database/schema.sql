@@ -110,6 +110,16 @@ CREATE TABLE contact_forms (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Newsletter Subscribers Table
+CREATE TABLE newsletter_subscribers (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  email VARCHAR(255) NOT NULL UNIQUE,
+  status VARCHAR(20) DEFAULT 'subscribed',
+  unsubscribe_token VARCHAR(64) NOT NULL UNIQUE,
+  unsubscribed_at TIMESTAMP WITH TIME ZONE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Blog Posts Table
 CREATE TABLE blog_posts (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -148,6 +158,7 @@ CREATE INDEX idx_blog_posts_slug ON blog_posts(slug);
 CREATE INDEX idx_blog_posts_published_at ON blog_posts(published_at DESC);
 CREATE INDEX idx_contact_forms_status ON contact_forms(status);
 CREATE INDEX idx_contact_forms_created_at ON contact_forms(created_at DESC);
+CREATE INDEX idx_newsletter_status ON newsletter_subscribers(status);
 CREATE INDEX idx_case_study_images_case_study_id ON case_study_images(case_study_id);
 CREATE INDEX idx_team_members_order ON team_members(order_index);
 

@@ -12,8 +12,23 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050505;
+  --foreground: #f5f5f5;
+  --phi: 1.618;
+  --space-1: 13px;
+  --space-2: 21px;
+  --space-3: 34px;
+  --space-4: 55px;
+  --space-5: 89px;
+  --space-6: 144px;
+  --text-base: 18px;
+  --text-1: 29px;
+  --text-2: 47px;
+  --text-3: 76px;
+  --text-4: 123px;
+  --red-core: #d72638;
+  --red-deep: #7a0d1b;
+  --red-dark: #3d0610;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,7 +41,97 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.phi-pad-y {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+}
+
+.phi-gap-lg {
+  gap: var(--space-5);
+}
+
+.phi-gap-md {
+  gap: var(--space-3);
+}
+
+.phi-card {
+  border-radius: 34px;
+}
+
+.phi-golden-frame {
+  aspect-ratio: 1.618 / 1;
+  border-radius: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  position: relative;
+}
+
+.phi-section {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+}
+
+.phi-panel {
+  border-radius: 34px;
+  border: 1px solid rgba(215, 38, 56, 0.25);
+  background: linear-gradient(135deg, rgba(7, 7, 7, 0.9), rgba(20, 6, 9, 0.92));
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.45);
+}
+
+.phi-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(215, 38, 56, 0.7), transparent);
+}
+
+.phi-grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 34px 34px;
+  background-position: center;
+}
+
+.phi-glow {
+  box-shadow: 0 0 40px rgba(215, 38, 56, 0.25);
+}
+
+.pyth-grid {
+  background-image:
+    linear-gradient(135deg, rgba(215, 38, 56, 0.08) 0, rgba(215, 38, 56, 0.08) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 55px 55px, 34px 34px;
+}
+
+.triangle-frame {
+  position: relative;
+}
+
+.triangle-frame::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border: 1px solid rgba(215, 38, 56, 0.25);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  pointer-events: none;
+}
+
+.triangle-frame::after {
+  content: "";
+  position: absolute;
+  inset: -34px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
 }
 
 /* Custom Cursor - only hide default cursor on desktop with mouse */
@@ -120,4 +225,33 @@ body {
   );
   background-size: 1000px 100%;
   animation: shimmer 3s infinite;
+}
+
+
+/* Hardware acceleration and mobile menu optimizations */
+.fixed {
+  /* Force GPU rendering for smoother animations */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Prevent flickering during animations */
+@supports (backdrop-filter: blur(10px)) {
+  .backdrop-blur-xl {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
+}
+
+/* Optimize clip-path animations */
+@keyframes prevent-jank {
+  0%, 100% { transform: translateZ(0); }
+}
+
+/* Smooth transitions for all motion elements */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

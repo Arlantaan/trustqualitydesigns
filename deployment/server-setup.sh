@@ -2,7 +2,7 @@
 
 # ============================================
 # SERVER SETUP SCRIPT - Ubuntu 24.04
-# Demo Server: 46.225.69.136
+# Demo Server: 91.98.203.172
 # ============================================
 
 set -e  # Exit on any error
@@ -50,14 +50,42 @@ chown -R root:root /var/www/tqd
 echo "🌐 Configuring Nginx..."
 rm -f /etc/nginx/sites-enabled/default
 
-# Create Nginx config
+# Create rate limiting configuration
+cat > /etc/nginx/conf.d/rate-limit.conf << 'EOF'
+# Rate limiting zones to prevent abuse detection
+limit_req_zone $binary_remote_addr zone=general:10m rate=5r/s;
+limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
+EOF
+
+# Create Nginx config with security headers
 cat > /etc/nginx/sites-available/tqd << 'EOF'
 server {
     listen 80;
     listen [::]:80;
-    server_name 46.225.69.136;  # Replace with your domain when ready
+    server_name 91.98.203.172;  # Replace with your domain when ready
 
+    # Enhanced security headers for demo protection
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+    add_header X-Robots-Tag "noindex, nofollow" always;
+
+    # API endpoints with rate limiting
+    location /api/ {
+        limit_req zone=api burst=20 nodelay;
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Main application with rate limiting
     location / {
+        limit_req zone=general burst=10 nodelay;
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
@@ -67,6 +95,13 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
+    }
+
+    # Health check (no rate limit)
+    location /health {
+        access_log off;
+        return 200 "healthy\n";
+        add_header Content-Type text/plain;
     }
 }
 EOF

@@ -45,7 +45,7 @@ pm2 status
 echo "✅ Deployment complete!"
 echo ""
 echo "🌐 Application is running at:"
-echo "   http://46.225.69.136"
+echo "   http://91.98.203.172"
 echo ""
 echo "📊 Monitor with: pm2 monit"
 echo "📝 View logs: pm2 logs $APP_NAME"

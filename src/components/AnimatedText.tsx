@@ -9,7 +9,7 @@ interface AnimatedTextProps {
 }
 
 export function AnimatedText({ children, className = '', delay = 0 }: AnimatedTextProps) {
-  const words = children.split(' ');
+  const lines = children.split('\n');
 
   const container = {
     hidden: { opacity: 0 },
@@ -42,15 +42,22 @@ export function AnimatedText({ children, className = '', delay = 0 }: AnimatedTe
       initial="hidden"
       animate="visible"
     >
-      {words.map((word, index) => (
-        <motion.span
-          key={index}
-          variants={child}
-          style={{ display: 'inline-block', marginRight: '0.25em' }}
-        >
-          {word}
-        </motion.span>
-      ))}
+      {lines.map((line, lineIndex) => {
+        const words = line.split(' ');
+        return (
+          <div key={lineIndex} className="block">
+            {words.map((word, index) => (
+              <motion.span
+                key={`${lineIndex}-${index}`}
+                variants={child}
+                style={{ display: 'inline-block', marginRight: '0.25em' }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </div>
+        );
+      })}
     </motion.div>
   );
 }

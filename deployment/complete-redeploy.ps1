@@ -3,8 +3,8 @@
 # Deletes old site and deploys fresh
 # ============================================
 
-$SERVER = "root@46.225.69.136"
-$SERVER_IP = "46.225.69.136"
+$SERVER = "root@91.98.203.172"
+$SERVER_IP = "91.98.203.172"
 $APP_DIR = "/var/www/tqd"
 
 Write-Host ""

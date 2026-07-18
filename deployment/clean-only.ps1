@@ -3,7 +3,7 @@
 # Clean Hetzner server without deploying
 # ============================================
 
-$SERVER = "root@46.225.69.136"
+$SERVER = "root@91.98.203.172"
 
 Write-Host ""
 Write-Host "═══════════════════════════════════════════════════" -ForegroundColor Cyan

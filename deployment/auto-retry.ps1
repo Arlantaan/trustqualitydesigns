@@ -1,5 +1,5 @@
 # Auto-retry deployment script
-$SERVER = "root@46.225.69.136"
+$SERVER = "root@91.98.203.172"
 $MAX_ATTEMPTS = 20
 $WAIT_SECONDS = 30
 
@@ -51,7 +51,7 @@ pm2 status
             Write-Host "DEPLOYMENT SUCCESSFUL!" -ForegroundColor Green
             Write-Host "==============================" -ForegroundColor Green
             Write-Host ""
-            Write-Host "Live at: http://46.225.69.136" -ForegroundColor Cyan
+            Write-Host "Live at: http://91.98.203.172" -ForegroundColor Cyan
             Write-Host ""
         } else {
             Write-Host ""

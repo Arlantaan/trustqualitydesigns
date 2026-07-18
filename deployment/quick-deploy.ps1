@@ -3,7 +3,7 @@
 # Deploy TQD to Demo Server from Windows
 # ============================================
 
-$SERVER_IP = "46.225.69.136"
+$SERVER_IP = "91.98.203.172"
 $SERVER_USER = "root"
 $SERVER_DIR = "/var/www/tqd"
 

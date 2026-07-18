@@ -69,3 +69,11 @@ Thumbs.db
 temp/
 tmp/
 *.tmp
+
+# Local deploy artifacts & backups (large, not source)
+_deploy/
+*.tar.gz
+
+# Local SQLite leads database (contains customer contact data)
+# NOTE: leading slash = root only, so src/data/ (source content) is NOT ignored
+/data/

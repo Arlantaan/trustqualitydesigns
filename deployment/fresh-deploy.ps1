@@ -3,11 +3,17 @@
 # Clean and redeploy from local build
 # ============================================
 
-$SERVER = "root@46.225.69.136"
-$SERVER_IP = "46.225.69.136"
+$SERVER = "root@91.98.203.172"
+$SERVER_IP = "91.98.203.172"
+
+# Ensure we're in the project root directory
+$scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+$projectRoot = Split-Path -Parent $scriptPath
+Set-Location $projectRoot
 
 Write-Host "Fresh Deployment - TQD Website" -ForegroundColor Cyan
 Write-Host "==============================" -ForegroundColor Cyan
+Write-Host "Working directory: $(Get-Location)" -ForegroundColor Gray
 Write-Host ""
 
 # Step 1: Build locally
@@ -32,27 +38,39 @@ if (Test-Path "tqd-deploy.tar.gz") {
 
 # Create archive (excluding dev files)
 tar -czf tqd-deploy.tar.gz `
+    package.json `
+    package-lock.json `
+    next.config.* `
+    tsconfig.json `
+    public `
+    src `
+    .next `
+    types `
+    utils `
+    README.md `
+    tailwind.config.js `
+    postcss.config.js `
+    .env.production `
+    .env `
     --exclude='node_modules' `
     --exclude='.git' `
     --exclude='*.log' `
     --exclude='.env.local' `
     --exclude='deployment' `
-    .
+    --exclude='tqd-deploy.tar.gz' `
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Failed to create package!" -ForegroundColor Red
     exit 1
 }
-
 Write-Host "Package created!" -ForegroundColor Green
 Write-Host ""
 
 # Step 3: Clean server directory
-Write-Host "Step 3: Cleaning server directory..." -ForegroundColor Yellow
 ssh $SERVER "pm2 delete tqd-website 2>/dev/null; rm -rf /var/www/tqd; mkdir -p /var/www/tqd"
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Warning: Could not clean server directory" -ForegroundColor Yellow
+
 }
 
 Write-Host ""

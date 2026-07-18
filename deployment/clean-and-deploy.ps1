@@ -3,7 +3,7 @@
 # Clean Hetzner server and deploy fresh website
 # ============================================
 
-$SERVER = "root@46.225.69.136"
+$SERVER = "root@91.98.203.172"
 $APP_DIR = "/var/www/tqd"
 
 Write-Host ""

@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/utils';
 import type { ServiceOffering } from '@/types';
@@ -57,13 +55,6 @@ export function ServiceCard({
           )}
         </div>
 
-        <Link
-          href={`/services/${slug}`}
-          className="mt-6 inline-flex items-center gap-2 text-red-400 font-semibold hover:text-red-300 hover:gap-3 transition-all"
-        >
-          Learn More
-          <ArrowRight className="w-4 h-4" />
-        </Link>
       </TiltCard>
     </motion.div>
   );

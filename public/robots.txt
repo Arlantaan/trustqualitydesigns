@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://trustqualitydesign.com/sitemap.xml
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Sitemap (update when ready for production)
+# Sitemap: http://91.98.203.172/sitemap.xml

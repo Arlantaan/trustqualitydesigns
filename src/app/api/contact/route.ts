@@ -1,55 +1,103 @@
-import { NextRequest, NextResponse } from 'next/server';
-import type { ContactFormData } from '@/types';
+import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
+import { insertContact } from '@/lib/leads-db';
+import { isRateLimited } from '@/lib/rate-limit';
 
-export async function POST(request: NextRequest) {
+type ContactPayload = {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  company?: string;
+  message: string;
+};
+
+export async function POST(request: Request) {
   try {
-    const body: ContactFormData = await request.json();
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+      request.headers.get('x-real-ip') ??
+      'unknown';
 
-    // Validation
-    if (!body.firstName || !body.lastName || !body.email || !body.message) {
+    // 5 submissions per IP per 15 minutes
+    if (isRateLimited(`contact:${ip}`, 5, 15 * 60 * 1000)) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
       );
     }
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(body.email)) {
+    const body = (await request.json()) as ContactPayload;
+    const firstName = (body.firstName || '').trim();
+    const lastName = (body.lastName || '').trim();
+    const email = (body.email || '').trim();
+    const company = (body.company || '').trim();
+    const message = (body.message || '').trim();
+
+    if (!firstName || !email || !message) {
+      return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
+    }
+
+    const host = process.env.SMTP_HOST;
+    const port = Number(process.env.SMTP_PORT || 587);
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASS;
+    const secure = (process.env.SMTP_SECURE || 'false').toLowerCase() === 'true';
+    const mailFrom = process.env.MAIL_FROM || user;
+    const mailTo = process.env.MAIL_TO || mailFrom;
+
+    if (!host || !user || !pass || !mailFrom || !mailTo) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
-        { status: 400 }
+        { error: 'Email service is not configured.' },
+        { status: 500 }
       );
     }
 
-    // TODO: Integrate with database
-    // const contact = await db.contactForm.create({
-    //   data: {
-    //     firstName: body.firstName,
-    //     lastName: body.lastName,
-    //     email: body.email,
-    //     company: body.company,
-    //     projectType: body.projectType,
-    //     message: body.message,
-    //   },
-    // });
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure,
+      auth: { user, pass },
+    });
 
-    // TODO: Send notification email
-    // await sendEmail({
-    //   to: body.email,
-    //   template: 'contact-confirmation',
-    //   data: { firstName: body.firstName },
-    // });
+    const fullName = [firstName, lastName].filter(Boolean).join(' ');
 
-    return NextResponse.json(
-      { success: true, message: 'Contact form submitted successfully' },
-      { status: 200 }
-    );
+    // Persist lead to DB (non-blocking — never fail the request if DB errors)
+    const ipForDb = ip === 'unknown' ? undefined : ip;
+    try {
+      insertContact({ firstName, lastName, email, company, message, ip: ipForDb });
+    } catch (dbErr) {
+      console.error('leads-db insertContact error:', dbErr);
+    }
+
+    await transporter.sendMail({
+      from: `"Trust Quality Design" <${mailFrom}>`,
+      to: mailTo,
+      replyTo: email,
+      subject: `New Contact Message from ${fullName}`,
+      text: [
+        `Name: ${fullName}`,
+        `Email: ${email}`,
+        company ? `Company: ${company}` : '',
+        '',
+        message,
+      ]
+        .filter(Boolean)
+        .join('\n'),
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #111; line-height: 1.6;">
+          <h2 style="margin: 0 0 12px;">New Contact Message</h2>
+          <p><strong>Name:</strong> ${fullName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
+          <p style="margin-top: 16px;"><strong>Message:</strong></p>
+          <p style="white-space: pre-wrap;">${message.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+        </div>
+      `,
+    });
+
+    return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error('Contact form error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error('Contact API error:', error);
+    return NextResponse.json({ error: 'Failed to send message.' }, { status: 500 });
   }
 }

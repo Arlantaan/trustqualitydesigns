@@ -3,14 +3,20 @@
 # Interactive - Enter password when prompted
 # ============================================
 
-$SERVER = "root@46.225.69.136"
-$SERVER_IP = "46.225.69.136"
+$SERVER = "root@46.225.213.161"
+$SERVER_IP = "46.225.213.161"
 $APP_DIR = "/var/www/tqd"
+
+# Ensure we're in the project root directory
+$scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+$projectRoot = Split-Path -Parent $scriptPath
+Set-Location $projectRoot
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "   Manual Deployment - TQD Website" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "Working directory: $(Get-Location)" -ForegroundColor Gray
 Write-Host ""
 Write-Host "You will be prompted for the server password multiple times." -ForegroundColor Yellow
 Write-Host "Please enter it each time it's requested." -ForegroundColor Yellow
@@ -36,14 +42,30 @@ if (-not (Test-Path "tqd-deploy.tar.gz")) {
     
     Write-Host ""
     Write-Host "[2/6] Creating deployment package..." -ForegroundColor Yellow
+    # Explicitly include all required files and folders for deployment
+    # Note: .next is excluded since we rebuild on server
     tar -czf tqd-deploy.tar.gz `
+        package.json `
+        package-lock.json `
+        next.config.ts `
+        tsconfig.json `
+        middleware.ts `
+        public `
+        src `
+        types `
+        utils `
+        README.md `
+        tailwind.config.js `
+        postcss.config.js `
+        .env.production `
+        .env `
         --exclude='node_modules' `
         --exclude='.git' `
         --exclude='*.log' `
         --exclude='.env.local' `
         --exclude='deployment' `
         --exclude='tqd-deploy.tar.gz' `
-        .
+        --exclude='.next'
     
     if ($LASTEXITCODE -ne 0) {
         Write-Host "ERROR: Failed to create package!" -ForegroundColor Red
@@ -51,6 +73,10 @@ if (-not (Test-Path "tqd-deploy.tar.gz")) {
     }
     
     Write-Host "SUCCESS: Package created!" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "Verifying package contents..." -ForegroundColor Gray
+    tar -tzf tqd-deploy.tar.gz | Select-Object -First 20
+    Write-Host "... (showing first 20 files)" -ForegroundColor Gray
     Write-Host ""
 } else {
     Write-Host "Using existing deployment package: tqd-deploy.tar.gz" -ForegroundColor Green
@@ -107,6 +133,7 @@ Write-Host "This will take 2-3 minutes. Enter your password when prompted:" -For
 Write-Host ""
 
 ssh $SERVER @"
+set -e
 echo '==================================='
 echo 'Extracting files...'
 cd $APP_DIR
@@ -115,18 +142,51 @@ rm /tmp/tqd-deploy.tar.gz
 echo 'Files extracted!'
 
 echo ''
-echo 'Installing dependencies...'
-npm install --production
+echo 'Cleaning old build...'
+rm -rf .next
+echo 'Old build cleaned!'
+
+echo ''
+echo 'Installing dependencies (including dev dependencies for build)...'
+npm install
+if [ $? -ne 0 ]; then
+    echo 'ERROR: npm install failed!'
+    exit 1
+fi
 echo 'Dependencies installed!'
 
 echo ''
 echo 'Building application...'
 npm run build
-echo 'Build complete!'
+if [ $? -ne 0 ]; then
+    echo 'ERROR: Build failed!'
+    exit 1
+fi
+
+# Verify build exists
+if [ ! -d ".next" ] || [ ! -f ".next/BUILD_ID" ]; then
+    echo 'ERROR: Build verification failed! .next directory or BUILD_ID missing!'
+    exit 1
+fi
+echo 'Build complete and verified!'
+
+echo ''
+echo 'Removing dev dependencies to save space...'
+npm prune --production
+echo 'Dev dependencies removed!'
+
+echo ''
+echo 'Stopping old PM2 process...'
+pm2 delete tqd-website 2>/dev/null || true
+pm2 save
 
 echo ''
 echo 'Starting with PM2...'
 pm2 start npm --name tqd-website -- start
+if [ $? -ne 0 ]; then
+    echo 'ERROR: PM2 start failed!'
+    exit 1
+fi
 pm2 save
 
 echo ''

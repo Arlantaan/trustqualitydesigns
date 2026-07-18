@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/utils';
 
@@ -10,7 +11,6 @@ const navigation = [
   { label: 'Work', href: '/work' },
   { label: 'Services', href: '/services' },
   { label: 'About', href: '/about' },
-  { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -18,6 +18,8 @@ export function Header() {
   // STATE MANAGEMENT
   // These control what's visible and when animations happen
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [rippleOrigin, setRippleOrigin] = useState({ x: 0, y: 0 });
   
@@ -25,8 +27,18 @@ export function Header() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    let lastY = window.scrollY;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentY = window.scrollY;
+      setIsScrolled(currentY > 40);
+
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      setScrollProgress(Math.min(1, Math.max(0, currentY / maxScroll)));
+
+      const isScrollingDown = currentY > lastY && currentY > 140;
+      setIsHidden(isScrollingDown);
+      lastY = currentY;
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -78,20 +90,68 @@ export function Header() {
   };
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'bg-gray-950/95 backdrop-blur-xl shadow-xl shadow-red-500/20' : 'bg-transparent'
-      )}
+    <motion.header
+      animate={{ y: isHidden ? -88 : 0 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 28 }}
+      className={cn('fixed top-0 left-0 right-0 transition-all duration-300', isMobileMenuOpen ? 'z-[10000]' : 'z-50')}
     >
-      <nav className="flex items-center justify-between px-6 py-5 max-w-7xl mx-auto lg:px-12">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-gradient-to-br from-red-600 via-red-700 to-red-800 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/50 group-hover:shadow-xl group-hover:shadow-red-500/70 transition-all duration-300 group-hover:scale-110">
-            <span className="text-white font-black text-lg">TQD</span>
-          </div>
-          <span className="font-black text-xl hidden sm:inline text-white">
-            Trust Quality
+      {/* ambient top glow */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/50 via-black/20 to-transparent" />
+
+      <div className={cn(
+        'mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 transition-all duration-300',
+        isScrolled ? 'pt-2' : 'pt-4'
+      )}>
+        <div
+          className={cn(
+            'relative rounded-full p-[1px] transition-all duration-300',
+            isScrolled
+              ? 'bg-gradient-to-r from-white/25 via-red-500/50 to-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.55)]'
+              : 'bg-gradient-to-r from-white/15 via-red-500/35 to-white/10 shadow-[0_12px_35px_rgba(0,0,0,0.45)]'
+          )}
+        >
+          <div
+            className={cn(
+              'relative rounded-full overflow-hidden border border-white/10 backdrop-blur-2xl transition-all duration-300',
+              isScrolled
+                ? 'bg-gradient-to-b from-black/75 via-black/60 to-black/45'
+                : 'bg-gradient-to-b from-black/60 via-black/45 to-black/35'
+            )}
+          >
+            {/* inner sheen + shimmer */}
+            <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/12 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 rounded-full shimmer opacity-25" />
+
+            {/* progress bar */}
+            <div className="absolute bottom-0 left-4 right-4 h-[2px] bg-transparent">
+              <motion.div
+                className="h-full bg-gradient-to-r from-red-500 via-red-600 to-red-700"
+                style={{ scaleX: scrollProgress, transformOrigin: '0% 50%' }}
+              />
+            </div>
+
+            <nav className={cn(
+              'flex items-center justify-between px-6 transition-all duration-300',
+              isScrolled ? 'py-3' : 'py-5'
+            )}>
+        {/* Brand */}
+        <Link href="/" className="group inline-flex items-center gap-3">
+          <Image
+            src="/images/websitepics/Favicontqd.png"
+            alt="Trust Quality Design logo"
+            width={32}
+            height={32}
+            className={cn(
+              'object-contain brightness-110 contrast-110 drop-shadow-[0_1px_6px_rgba(255,255,255,0.35)] transition-all duration-300',
+              isScrolled ? 'h-7 w-7' : 'h-8 w-8'
+            )}
+            priority
+          />
+          <span className={cn(
+            'font-black text-white transition-all duration-300',
+            isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
+          )}>
+            Trust Quality Design
           </span>
         </Link>
 
@@ -103,11 +163,11 @@ export function Header() {
               href={item.href}
               className={cn(
                 'text-base font-semibold transition-all duration-200 hover:scale-110 relative group',
-                isScrolled ? 'text-gray-200 hover:text-red-400' : 'text-white hover:text-red-300'
+                'text-white/85 hover:text-white'
               )}
             >
               {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-red-700 group-hover:w-full transition-all duration-300" />
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-500 to-red-700 group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
         </div>
@@ -116,7 +176,7 @@ export function Header() {
         <div className="hidden md:block">
           <Link
             href="/contact"
-            className="group relative px-8 py-3 bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white text-sm font-bold rounded-full hover:shadow-2xl hover:shadow-red-500/50 transition-all duration-300 hover:scale-110 overflow-hidden"
+            className="group relative px-8 py-3 bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white text-sm font-bold rounded-full ring-1 ring-white/10 hover:shadow-2xl hover:shadow-red-500/50 transition-all duration-300 hover:scale-[1.08] overflow-hidden"
           >
             <span className="relative z-10">Get Started</span>
             <div className="absolute inset-0 bg-gradient-to-r from-red-800 via-red-700 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -124,171 +184,92 @@ export function Header() {
         </div>
 
         {/* Mobile Menu Toggle - Hamburger Icon */}
-        {/* z-[60] ensures button stays above blob (z-50) so you can close it */}
         <button
           ref={buttonRef}
           onClick={handleMenuToggle}
-          className="md:hidden flex flex-col gap-1.5 focus:outline-none z-[60] relative"
+          type="button"
+          className="md:hidden flex flex-col gap-1.5 focus:outline-none relative z-[10001] touch-manipulation"
           aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
         >
           {/* Two lines that animate into X shape */}
           <span
             className={cn(
               'w-6 h-0.5 transition-all duration-300',
-              isMobileMenuOpen ? 'bg-white' : 'bg-white',
+              isMobileMenuOpen ? 'bg-red-500' : 'bg-red-500',
               isMobileMenuOpen ? 'rotate-45 translate-y-1' : ''
             )}
           />
           <span
             className={cn(
               'w-6 h-0.5 transition-all duration-300',
-              isMobileMenuOpen ? 'bg-white' : 'bg-white',
+              isMobileMenuOpen ? 'bg-red-500' : 'bg-red-500',
               isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
             )}
           />
         </button>
-      </nav>
+            </nav>
+          </div>
+        </div>
+      </div>
 
-      {/* MORPHING BLOB MENU */}
-      {/* AnimatePresence: Framer Motion component that animates components entering/leaving DOM */}
+      {/* SIMPLE MOBILE MENU */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <>
-            {/* BLOB BACKGROUND - The liquid morphing shape */}
-            <motion.div
-              className="fixed inset-0 z-40 md:hidden"
-              initial={{
-                // START: Small circle at button position
-                clipPath: `circle(0% at ${rippleOrigin.x}px ${rippleOrigin.y}px)`,
-              }}
-              animate={{
-                // END: Expands to cover entire screen
-                // 150% ensures it covers corners even on rotation
-                clipPath: `circle(150% at ${rippleOrigin.x}px ${rippleOrigin.y}px)`,
-              }}
-              exit={{
-                // CLOSING: Shrinks back to origin point (SAME ELASTIC EFFECT)
-                clipPath: `circle(0% at ${rippleOrigin.x}px ${rippleOrigin.y}px)`,
-              }}
-              transition={{
-                // ELASTIC BOUNCE - feels like liquid (SAME for open AND close)
-                type: 'spring',
-                stiffness: 50,  // Lower = more wobbly
-                damping: 25,    // Lower = more bouncy
-                duration: 0.8,
-              }}
-              style={{
-                // Gradient background - red liquid metal theme
-                background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
-              }}
-            />
-
-            {/* MENU CONTENT - Items and links */}
-            <motion.div
-              className="fixed inset-0 z-50 md:hidden flex items-center justify-center"
-              initial={{ opacity: 0 }}  // Fade in
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}     // Fade out
-              transition={{ delay: 0.2, duration: 0.3 }} // Start after blob begins
-            >
-              <nav className="w-full max-w-md px-8">
-                {/* Container for staggered animations */}
-                <motion.div
-                  className="space-y-6"
-                  // STAGGER: Each child animates in sequence
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: {
-                      opacity: 1,
-                      transition: {
-                        staggerChildren: 0.1,  // 0.1s delay between each item
-                        delayChildren: 0.3,    // Wait for blob to expand first
-                      },
-                    },
-                  }}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                >
-                  {/* MENU ITEMS - Each one bounces in */}
+          <motion.div
+            className="fixed top-0 left-0 w-full h-screen z-[9999] md:hidden bg-gradient-to-br from-red-600 via-red-700 to-red-900 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <div className="flex items-center justify-center h-full w-full px-6" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                aria-label="Close menu"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="absolute top-6 right-6 h-12 w-12 rounded-full border border-white/30 text-white text-2xl leading-none flex items-center justify-center hover:bg-white/10 transition-colors"
+              >
+                ×
+              </button>
+              <nav className="w-full max-w-md">
+                <div className="space-y-4">
                   {navigation.map((item, index) => (
                     <motion.div
                       key={item.href}
-                      // Individual item animation (used by stagger parent)
-                      variants={{
-                        hidden: { 
-                          opacity: 0, 
-                          y: 50,           // Start 50px below
-                          scale: 0.8,      // Start smaller
-                        },
-                        visible: { 
-                          opacity: 1, 
-                          y: 0,            // End at normal position
-                          scale: 1,        // End at normal size
-                          transition: {
-                            type: 'spring',
-                            stiffness: 100,
-                            damping: 15,
-                          }
-                        },
-                      }}
-                      // HOVER ANIMATION: Magnetic lift effect
-                      whileHover={{ 
-                        scale: 1.1,        // Grow 10%
-                        x: 10,             // Shift right slightly
-                        transition: { duration: 0.2 }
-                      }}
-                      whileTap={{ scale: 0.95 }}  // Shrink when clicked
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.08 + 0.1 }}
                     >
                       <Link
                         href={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="block text-4xl font-black text-white hover:text-red-200 transition-colors relative group"
+                        className="block w-full text-xl font-bold text-white text-center py-4 px-6 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 active:scale-95 transition-all"
                       >
-                        {/* Glass morphism effect behind text on hover */}
-                        <span className="absolute -inset-4 bg-white/10 backdrop-blur-xl rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <span className="relative">{item.label}</span>
-                        
-                        {/* Index number - adds rhythm */}
-                        <span className="absolute -left-8 top-0 text-sm text-red-300 opacity-50">
-                          0{index + 1}
-                        </span>
+                        {item.label}
                       </Link>
                     </motion.div>
                   ))}
-
-                  {/* CTA BUTTON - Appears last with extra emphasis */}
                   <motion.div
-                    variants={{
-                      hidden: { opacity: 0, y: 50, scale: 0.8 },
-                      visible: { 
-                        opacity: 1, 
-                        y: 0, 
-                        scale: 1,
-                        transition: {
-                          type: 'spring',
-                          stiffness: 100,
-                          damping: 15,
-                        }
-                      },
-                    }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: navigation.length * 0.08 + 0.2 }}
                   >
                     <Link
                       href="/contact"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block w-full px-8 py-4 bg-transparent border-2 border-white text-white text-center text-lg font-bold rounded-full mt-8 hover:bg-white hover:text-red-600 transition-all shadow-2xl"
+                      className="block w-full px-8 py-4 bg-white text-red-600 text-center text-lg font-bold rounded-full mt-4 hover:bg-red-50 active:scale-95 transition-all shadow-xl"
                     >
                       Get Started
                     </Link>
                   </motion.div>
-                </motion.div>
+                </div>
               </nav>
-            </motion.div>
-          </>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }
