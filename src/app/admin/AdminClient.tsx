@@ -50,7 +50,9 @@ export default function AdminClient() {
 
   async function handleSignOut() {
     await fetch('/api/admin/auth', { method: 'DELETE' });
-    router.push('/admin/login');
+    // replace, not push: drops /admin from history so Back can't restore the
+    // cached dashboard after signing out.
+    router.replace('/admin/login');
     router.refresh();
   }
 

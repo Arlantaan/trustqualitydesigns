@@ -8,11 +8,14 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // ── Admin protection ──────────────────────────────────────────────────────
-  // Protect /admin and /api/admin/* (except /api/admin/auth which handles login)
+  // Protect /admin and /api/admin/*, except the two routes that must stay public:
+  // the login page and the auth endpoint it posts to. Gating /admin/login would
+  // redirect it to itself in a loop whenever the cookie is absent.
   const isAdminPath = pathname.startsWith('/admin') || pathname.startsWith('/api/admin');
   const isAuthEndpoint = pathname === '/api/admin/auth';
+  const isLoginPage = pathname === '/admin/login';
 
-  if (isAdminPath && !isAuthEndpoint) {
+  if (isAdminPath && !isAuthEndpoint && !isLoginPage) {
     const adminPassword = process.env.ADMIN_PASSWORD;
     if (!adminPassword) {
       return new NextResponse('Admin not configured.', { status: 503 });
