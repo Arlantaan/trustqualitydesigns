@@ -3,6 +3,8 @@ import nodemailer from 'nodemailer';
 import { insertContact } from '@/lib/leads-db';
 import { isRateLimited } from '@/lib/rate-limit';
 
+export const runtime = 'nodejs';
+
 type ContactPayload = {
   firstName: string;
   lastName?: string;
@@ -37,6 +39,36 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
     }
 
+    // 1) Save the lead — THIS is what determines success. It's captured in the
+    //    admin dashboard, so as long as it saves the visitor sees a success.
+    const ipForDb = ip === 'unknown' ? undefined : ip;
+    insertContact({ firstName, lastName, email, company, message, ip: ipForDb });
+
+    // 2) Best-effort email notification — never allowed to fail the request.
+    //    Fire and forget; if SMTP is down/misconfigured the lead is still saved.
+    void sendNotification({ firstName, lastName, email, company, message });
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    // Only reached if saving the lead itself failed.
+    console.error('Contact API error (save failed):', error);
+    return NextResponse.json(
+      { error: 'Something went wrong. Please try again.' },
+      { status: 500 }
+    );
+  }
+}
+
+// Sends the notification email. All errors are swallowed and logged — the
+// contact submission is already saved before this runs.
+async function sendNotification(data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  company: string;
+  message: string;
+}) {
+  try {
     const host = process.env.SMTP_HOST;
     const port = Number(process.env.SMTP_PORT || 587);
     const user = process.env.SMTP_USER;
@@ -45,41 +77,22 @@ export async function POST(request: Request) {
     const mailFrom = process.env.MAIL_FROM || user;
     const mailTo = process.env.MAIL_TO || mailFrom;
 
-    if (!host || !user || !pass || !mailFrom || !mailTo) {
-      return NextResponse.json(
-        { error: 'Email service is not configured.' },
-        { status: 500 }
-      );
-    }
+    if (!host || !user || !pass || !mailFrom || !mailTo) return; // email not configured — skip silently
 
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: { user, pass },
-    });
-
-    const fullName = [firstName, lastName].filter(Boolean).join(' ');
-
-    // Persist lead to DB (non-blocking — never fail the request if DB errors)
-    const ipForDb = ip === 'unknown' ? undefined : ip;
-    try {
-      insertContact({ firstName, lastName, email, company, message, ip: ipForDb });
-    } catch (dbErr) {
-      console.error('leads-db insertContact error:', dbErr);
-    }
+    const transporter = nodemailer.createTransport({ host, port, secure, auth: { user, pass } });
+    const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ');
 
     await transporter.sendMail({
       from: `"Trust Quality Design" <${mailFrom}>`,
       to: mailTo,
-      replyTo: email,
+      replyTo: data.email,
       subject: `New Contact Message from ${fullName}`,
       text: [
         `Name: ${fullName}`,
-        `Email: ${email}`,
-        company ? `Company: ${company}` : '',
+        `Email: ${data.email}`,
+        data.company ? `Company: ${data.company}` : '',
         '',
-        message,
+        data.message,
       ]
         .filter(Boolean)
         .join('\n'),
@@ -87,17 +100,14 @@ export async function POST(request: Request) {
         <div style="font-family: Arial, sans-serif; color: #111; line-height: 1.6;">
           <h2 style="margin: 0 0 12px;">New Contact Message</h2>
           <p><strong>Name:</strong> ${fullName}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
+          <p><strong>Email:</strong> ${data.email}</p>
+          ${data.company ? `<p><strong>Company:</strong> ${data.company}</p>` : ''}
           <p style="margin-top: 16px;"><strong>Message:</strong></p>
-          <p style="white-space: pre-wrap;">${message.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+          <p style="white-space: pre-wrap;">${data.message.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
         </div>
       `,
     });
-
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error('Contact API error:', error);
-    return NextResponse.json({ error: 'Failed to send message.' }, { status: 500 });
+  } catch (err) {
+    console.error('Contact notification email failed (lead was still saved):', err);
   }
 }

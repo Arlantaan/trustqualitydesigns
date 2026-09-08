@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    // Serve AVIF first (≈20-30% smaller than WebP), fall back to WebP.
+    formats: ['image/avif', 'image/webp'],
+    // Cache optimized images for a year (default is 60s → repeat visitors re-fetch).
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: 'https',

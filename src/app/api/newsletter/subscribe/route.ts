@@ -34,6 +34,30 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Valid email is required.' }, { status: 400 });
     }
 
+    // 1) Save the subscriber — THIS is what determines success (visible in the
+    //    admin dashboard). Email is a bonus, not a requirement.
+    const ipForDb = ip === 'unknown' ? undefined : ip;
+    const source = request.headers.get('referer') ?? undefined;
+    insertSubscriber({ email, source, ip: ipForDb });
+
+    // 2) Best-effort emails (admin alert + welcome) — never fail the request.
+    void sendEmails(email, request.headers.get('referer') || 'unknown');
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    // Only reached if saving the subscriber itself failed.
+    console.error('Newsletter subscribe error (save failed):', error);
+    return NextResponse.json(
+      { error: 'Something went wrong. Please try again.' },
+      { status: 500 }
+    );
+  }
+}
+
+// Sends the admin alert + subscriber welcome email. All errors swallowed —
+// the subscriber is already saved before this runs.
+async function sendEmails(email: string, referer: string) {
+  try {
     const host = process.env.SMTP_HOST;
     const port = Number(process.env.SMTP_PORT || 587);
     const user = process.env.SMTP_USER;
@@ -42,32 +66,10 @@ export async function POST(request: Request) {
     const mailFrom = process.env.MAIL_FROM || user;
     const mailTo = process.env.MAIL_TO || mailFrom;
 
-    if (!host || !user || !pass || !mailFrom || !mailTo) {
-      return NextResponse.json({ error: 'Email service is not configured.' }, { status: 500 });
-    }
+    if (!host || !user || !pass || !mailFrom || !mailTo) return; // not configured — skip silently
 
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: { user, pass },
-    });
-
-    // Persist subscriber to DB (non-blocking)
-    try {
-      const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim()
-               ?? request.headers.get('x-real-ip')
-               ?? undefined;
-      const source = request.headers.get('referer') ?? undefined;
-      insertSubscriber({ email, source, ip });
-    } catch (dbErr) {
-      console.error('leads-db insertSubscriber error:', dbErr);
-    }
-
+    const transporter = nodemailer.createTransport({ host, port, secure, auth: { user, pass } });
     const submittedAt = new Date().toISOString();
-    const referer = request.headers.get('referer') || 'unknown';
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-    const newsletterImageUrl = `${siteUrl}/images/websitepics/12276830_4530930.png`;
     const newsletterImagePath = path.join(
       process.cwd(),
       'public',
@@ -116,10 +118,7 @@ export async function POST(request: Request) {
         },
       ],
     });
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error('Newsletter subscribe error:', error);
-    return NextResponse.json({ error: 'Failed to subscribe.' }, { status: 500 });
+  } catch (err) {
+    console.error('Newsletter email failed (subscriber was still saved):', err);
   }
 }
-
