@@ -7,22 +7,19 @@ import {
   MarketingCTA,
   FullscreenSlideshow
 } from '@/components';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 
-// Simple professional scroll reveal component
+// One-shot scroll reveal. Deliberately triggered, not scroll-linked: driving
+// opacity continuously from scroll position made sections fade back out on the
+// way up, which reads as jank rather than polish. Reveal once, then stay put.
 function FadeInSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'center center'],
-  });
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [40, 0]);
-  
   return (
-    <motion.div ref={ref} style={{ opacity, y }} transition={{ delay }}>
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
       {children}
     </motion.div>
   );
@@ -36,7 +33,7 @@ export default function Home() {
         description="We create powerful brand identities and construct premium signages that elevate your business presence."
       />
 
-      <section className="relative py-[var(--space-5)] bg-black">
+      <section className="relative section-y bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="phi-panel px-[var(--space-4)] py-[var(--space-3)] grid grid-cols-1 md:grid-cols-3 gap-[var(--space-3)]">
             {[
@@ -58,7 +55,7 @@ export default function Home() {
 
       {/* Work Section */}
       <FadeInSection>
-        <section className="py-20 md:py-28 bg-gradient-to-b from-gray-950 via-red-950 to-black relative overflow-hidden">
+        <section className="section-y bg-[#0f0f0f] relative overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-50" />
         

@@ -54,6 +54,21 @@ body {
   padding-bottom: var(--space-6);
 }
 
+/* Standard section rhythm. One lever for vertical spacing across the site, so
+   sections stay on the Fibonacci scale above instead of drifting into ad-hoc
+   py-20 / py-28 / py-32 values that read as unrelated. */
+.section-y {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .section-y {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+}
+
 .phi-gap-lg {
   gap: var(--space-5);
 }
@@ -132,14 +147,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
   pointer-events: none;
-}
-
-/* Custom Cursor - only hide default cursor on desktop with mouse */
-@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
-  .custom-cursor,
-  .custom-cursor * {
-    cursor: none !important;
-  }
 }
 
 /* Glassmorphism utility */

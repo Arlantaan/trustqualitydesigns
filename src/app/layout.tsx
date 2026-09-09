@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Bebas_Neue, Sora } from 'next/font/google';
 import Script from 'next/script';
-import { Header, Footer, MagneticCursor } from '@/components';
+import { Header, Footer } from '@/components';
 import { SITE_URL, SITE_NAME } from '@/lib/site';
 import './globals.css';
 
@@ -82,13 +82,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${displayFont.variable} ${bodyFont.variable} antialiased bg-gradient-to-b from-gray-950 via-red-950 to-black text-white custom-cursor`}
+        className={`${displayFont.variable} ${bodyFont.variable} antialiased text-white`}
       >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
-        <MagneticCursor />
         <Header />
         <main className="min-h-screen relative z-10">{children}</main>
         <Footer />

@@ -39,8 +39,10 @@ export function BlogCard({
       <TiltCard
         intensity={5}
         className={cn(
-          'group relative rounded-xl border border-red-800/30 bg-gradient-to-br from-red-900/40 to-red-950/40 backdrop-blur p-6 transition-all hover:shadow-2xl hover:shadow-red-500/40 hover:border-red-500 h-full flex flex-col',
-          featured && 'md:col-span-2 bg-gradient-to-br from-red-900/60 to-red-950/60',
+          // Neutral card ground, red reserved for hover and accents. A red tint
+          // on every card at rest leaves nothing for emphasis to land on.
+          'group relative rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur p-6 transition-all hover:shadow-2xl hover:shadow-red-500/20 hover:border-red-500/60 h-full flex flex-col',
+          featured && 'md:col-span-2 bg-white/[0.055] border-white/15',
           className
         )}
       >
