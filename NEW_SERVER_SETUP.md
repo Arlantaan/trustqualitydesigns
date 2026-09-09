@@ -39,8 +39,9 @@ To prevent future abuse flags from Hetzner:
 ### Step 1: Setup New Server
 ```powershell
 # From your local machine, run:
-ssh root@91.98.203.172
-# Password: jV9WtJUvjqbXEk9fhpem
+ssh root@<server_ip>
+# Password: stored in your password manager -- never commit it here.
+# This repository is public.
 ```
 
 ### Step 2: Upload and Run Server Setup
