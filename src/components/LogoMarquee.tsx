@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 
 interface LogoMarqueeProps {
   logos?: string[];
@@ -57,61 +56,15 @@ export function LogoMarquee({
   const duplicatedLogos = [...logos, ...logos];
 
   return (
-    <section className="py-20 bg-black overflow-hidden relative">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-16 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center"
-        >
-          {/* Overline */}
-          <motion.div
-            initial={{ opacity: 0, width: 0 }}
-            whileInView={{ opacity: 1, width: "auto" }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-block mb-4"
-          >
-            <span className="text-gray-400 text-sm font-semibold uppercase tracking-[0.3em] border-b-2 border-gray-600 pb-2">
-              Our Partners
-            </span>
-          </motion.div>
-
-          {/* Main Heading with Gradient Animation */}
-          <motion.h2 
-            className="text-4xl md:text-6xl font-black text-center mb-4 relative"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <span className="text-white">
-              Trusted By Leading Brands
-            </span>
-            
-            {/* Decorative Underline */}
-            <motion.div
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-white"
-              initial={{ width: 0 }}
-              whileInView={{ width: "60%" }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            />
-          </motion.h2>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-gray-400 text-base md:text-lg font-light max-w-2xl mx-auto"
-          >
-            Delivering exceptional branding and signage solutions to industry leaders
-          </motion.p>
-        </motion.div>
+    <section className="section-y bg-black overflow-hidden relative">
+      {/* Heading follows the same eyebrow + display-face pattern as every
+          other homepage section, so this block reads as part of the page
+          rather than a component dropped in from elsewhere. */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-[var(--space-4)] relative z-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-red-400 mb-3">Clients</p>
+        <h2 className="font-display text-[clamp(2.2rem,4vw,3.6rem)] leading-[1.05] text-white">
+          Trusted by the names on the high street.
+        </h2>
       </div>
 
       <div className="relative overflow-hidden">

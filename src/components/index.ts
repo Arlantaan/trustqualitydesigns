@@ -1,6 +1,7 @@
 export { Header } from './Header';
 export { Footer } from './Footer';
 export { Hero } from './Hero';
+export { HomeHero } from './HomeHero';
 export { CaseStudyCard, CaseStudyGrid } from './CaseStudyCard';
 export { BlogCard, BlogGrid } from './BlogCard';
 export { TeamCard, TeamGrid } from './TeamCard';
