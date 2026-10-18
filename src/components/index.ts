@@ -1,7 +1,5 @@
 export { Header } from './Header';
 export { Footer } from './Footer';
-export { Hero } from './Hero';
-export { HomeHero } from './HomeHero';
 export { HeroSlideshow } from './HeroSlideshow';
 export { CaseStudyCard, CaseStudyGrid } from './CaseStudyCard';
 export { BlogCard, BlogGrid } from './BlogCard';
@@ -9,7 +7,6 @@ export { TeamCard, TeamGrid } from './TeamCard';
 export { ServiceCard, ServiceGrid } from './ServiceCard';
 export { TiltCard } from './TiltCard';
 export { AnimatedText, ShatterText, PaintReveal } from './AnimatedText';
-export { FullscreenSlideshow } from './FullscreenSlideshow';
 export { LogoMarquee } from './LogoMarquee';
 export { NewsUpdates } from './NewsUpdates';
 export { MarketingCTA } from './MarketingCTA';
