@@ -285,3 +285,35 @@ body {
     grid-template-columns: minmax(0, 0.45fr) minmax(0, 0.55fr);
   }
 }
+
+/* Client marquee.
+   The track holds the client list twice, so translating by -50% lands the
+   second copy exactly where the first started — a seamless loop with no JS.
+   Duration is long because the row is wide; adjust here, not in the component. */
+.marquee-track {
+  width: max-content;
+  animation: marquee-scroll 55s linear infinite;
+}
+
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Fade the row out at both edges so names don't collide with the viewport. */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+  }
+}

@@ -1,76 +1,73 @@
+'use client';
+
 import Image from 'next/image';
 
-// Client wall.
+// Flowing client marquee.
 //
-// Replaces a marquee that cycled the same three logo files three times, which
-// read as "we have three clients". Every name below is a business whose work
-// appears in this site's own case studies or project photography.
+// Twelve real clients rather than three logo files cycled three times. Only
+// Ecobank, GTBank and OctopusTech exist as artwork in /public/images/logos, so
+// the remaining nine ride as typeset wordmarks — set at the same height and
+// opacity as the marks so the row reads as one continuous band.
 //
-// Names are set as type rather than sourced logos on purpose: only three logo
-// files exist in /public/images/logos, and a row mixing three real logos with
-// ten wordmarks looks broken. Typeset consistently, the roster reads as a
-// deliberate list -- and it stays honest, since nobody's trademark is being
-// reproduced without permission.
+// Drop a PNG into /public/images/logos and add `logo:` to an entry below to
+// promote a wordmark to a real mark. No other change needed.
 //
-// IMPORTANT: this list is the claim "these are our clients". Anything here that
+// IMPORTANT: this row is the claim "these are our clients". Anything here that
 // was not actually a TQD job must be removed.
-const CLIENTS = [
-  // Named explicitly in src/data/caseStudies.ts
-  { name: 'Jawara International Conference Centre', work: 'Entrance signage' },
-  { name: 'OIC Banjul Summit 2024', work: 'Hoardings & billboards' },
-  { name: 'Mirrored', work: 'Retail & interior branding' },
-  { name: 'LinkUp Electronics', work: 'Illuminated storefront' },
-  { name: 'Armanti Quality Food', work: 'Vehicle wraps' },
+type Client = { name: string; logo?: string };
+
+const CLIENTS: Client[] = [
+  // Named in src/data/caseStudies.ts
+  { name: 'Jawara International Conference Centre' },
+  { name: 'OIC Banjul Summit 2024' },
+  { name: 'Mirrored' },
+  { name: 'LinkUp Electronics' },
+  { name: 'Armanti Quality Food' },
   // Identified from project photography in /public/images/websitepics
-  { name: 'Ecobank', work: 'Fascia & pylon signage' },
-  { name: 'GTBank', work: 'Branch signage' },
-  { name: 'GNPC', work: 'Pylon & 3D letters' },
-  { name: 'Bloom Bank Africa', work: 'Reception signage' },
-  { name: 'TAF Africa Global', work: 'Interior feature wall' },
-  { name: 'Nescafé', work: 'Point-of-sale display' },
-  { name: 'Zone Electronics', work: 'Building wrap' },
+  { name: 'Ecobank', logo: '/images/logos/ecobank-the-pan-african-bank-loho-HD.png' },
+  { name: 'GTBank', logo: '/images/logos/gtbank_logo.png' },
+  { name: 'OctopusTech', logo: '/images/logos/octopus-tech-logo-rebranded-white.png' },
+  { name: 'GNPC' },
+  { name: 'Bloom Bank Africa' },
+  { name: 'TAF Africa Global' },
+  { name: 'Zone Electronics' },
 ];
 
-const LOGOS = [
-  { src: '/images/logos/ecobank-the-pan-african-bank-loho-HD.png', alt: 'Ecobank' },
-  { src: '/images/logos/gtbank_logo.png', alt: 'GTBank' },
-  { src: '/images/logos/octopus-tech-logo-rebranded-white.png', alt: 'OctopusTech' },
-];
+function Mark({ client }: { client: Client }) {
+  if (client.logo) {
+    return (
+      <div className="relative h-10 w-28 shrink-0 opacity-70 hover:opacity-100 transition-opacity">
+        <Image src={client.logo} alt={client.name} fill sizes="112px" className="object-contain" />
+      </div>
+    );
+  }
+  return (
+    <span className="shrink-0 font-display text-xl text-white/70 hover:text-white whitespace-nowrap transition-colors">
+      {client.name}
+    </span>
+  );
+}
 
 export function ClientRoster() {
+  // The list is rendered twice back-to-back; the track translates by exactly
+  // -50%, so the second copy lands where the first began and the loop is
+  // seamless. CSS animation rather than requestAnimationFrame — it runs on the
+  // compositor, survives background tabs, and stops for reduced-motion users.
+  const track = [...CLIENTS, ...CLIENTS];
+
   return (
-    <section className="py-[var(--space-5)] bg-black border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-400 mb-2">Clients</p>
-            <h2 className="font-display text-[clamp(2rem,3.4vw,3.2rem)] leading-[1.05] text-white">
-              Trusted by the names on the high street.
-            </h2>
-          </div>
-          <p className="text-sm text-gray-500">
-            Banks, government and retail — across The Gambia.
-          </p>
-        </div>
+    <section className="py-[var(--space-5)] bg-black border-t border-white/5 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-400 mb-2">Clients</p>
+        <h2 className="font-display text-[clamp(2rem,3.4vw,3.2rem)] leading-[1.05] text-white">
+          Trusted by the names on the high street.
+        </h2>
+      </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 border-t border-white/10">
-          {CLIENTS.map((c) => (
-            <li
-              key={c.name}
-              className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-4 border-b border-white/10"
-            >
-              <span className="font-display text-lg sm:text-xl text-white leading-tight">{c.name}</span>
-              <span className="text-xs uppercase tracking-[0.14em] text-gray-500">{c.work}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* The three brands we hold artwork for, shown as marks. */}
-        <div className="mt-10 flex flex-wrap items-center gap-x-12 gap-y-6">
-          {LOGOS.map((l) => (
-            <div key={l.src} className="relative h-10 w-28 opacity-60 hover:opacity-100 transition-opacity">
-              <Image src={l.src} alt={l.alt} fill sizes="112px" className="object-contain object-left" />
-            </div>
+      <div className="relative marquee-mask">
+        <div className="marquee-track flex items-center gap-14">
+          {track.map((c, i) => (
+            <Mark key={`${c.name}-${i}`} client={c} />
           ))}
         </div>
       </div>
