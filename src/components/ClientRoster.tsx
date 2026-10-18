@@ -14,30 +14,50 @@ import Image from 'next/image';
 //
 // IMPORTANT: this row is the claim "these are our clients". Anything here that
 // was not actually a TQD job must be removed.
-type Client = { name: string; logo?: string };
+// `light` means the artwork is already white/pale — it was drawn for dark
+// backgrounds and sits straight on the black row. Everything else is colour or
+// dark type and gets a white chip, because keying white out of a logo destroys
+// marks that use white as an actual colour (LinkUp's L sits in a white square;
+// its E is white bars). Measure before setting this: Ecobank and OctopusTech
+// average 255 and 225 luminance, GTBank and LinkUp 121 and 117.
+type Client = { name: string; logo?: string; light?: boolean };
 
 const CLIENTS: Client[] = [
   // Named in src/data/caseStudies.ts
   { name: 'Jawara International Conference Centre' },
   { name: 'OIC Banjul Summit 2024' },
   { name: 'Mirrored' },
-  { name: 'LinkUp Electronics' },
+  { name: 'LinkUp Electronics', logo: '/images/logos/linkup-electronics.png' },
   { name: 'Armanti Quality Food' },
   // Identified from project photography in /public/images/websitepics
-  { name: 'Ecobank', logo: '/images/logos/ecobank-the-pan-african-bank-loho-HD.png' },
+  { name: 'Ecobank', logo: '/images/logos/ecobank-the-pan-african-bank-loho-HD.png', light: true },
   { name: 'GTBank', logo: '/images/logos/gtbank_logo.png' },
-  { name: 'OctopusTech', logo: '/images/logos/octopus-tech-logo-rebranded-white.png' },
+  { name: 'OctopusTech', logo: '/images/logos/octopus-tech-logo-rebranded-white.png', light: true },
   { name: 'GNPC' },
   { name: 'Bloom Bank Africa' },
   { name: 'TAF Africa Global' },
   { name: 'Zone Electronics' },
 ];
 
+// Logos sit on a light chip rather than straight on the black row.
+//
+// Client logos arrive in whatever form the client supplied: some transparent,
+// most exported on a white card, several using white as an active colour inside
+// the mark (LinkUp's L sits in a white square; the E is white bars). Keying out
+// white to fake transparency destroys those marks. A chip renders every logo
+// faithfully, on the white they were designed against, and means any new file
+// dropped into /public/images/logos works without processing.
 function Mark({ client }: { client: Client }) {
   if (client.logo) {
     return (
-      <div className="relative h-10 w-28 shrink-0 opacity-70 hover:opacity-100 transition-opacity">
-        <Image src={client.logo} alt={client.name} fill sizes="112px" className="object-contain" />
+      <div
+        className={`shrink-0 flex h-14 w-36 items-center justify-center opacity-85 hover:opacity-100 transition-opacity ${
+          client.light ? '' : 'rounded-md bg-white px-4 py-2.5'
+        }`}
+      >
+        <div className="relative h-full w-full">
+          <Image src={client.logo} alt={client.name} fill sizes="144px" className="object-contain" />
+        </div>
       </div>
     );
   }
