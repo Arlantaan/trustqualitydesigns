@@ -25,12 +25,12 @@ const CLIENTS: Client[] = [
   { name: 'GTBank', logo: '/images/logos/gtbank_logo.png' },
   { name: 'OctopusTech', logo: '/images/logos/octopus-tech-logo-rebranded-white.png' },
   { name: 'LinkUp Electronics', logo: '/images/logos/linkup-electronics.png' },
-  { name: 'TAF Africa Global', logo: '/images/logos/taf-africa-global.png' },
+  { name: 'TAF Africa Global', logo: '/images/logos/tafafrica.png' },
   { name: 'GNPC', logo: '/images/logos/gnpc.png' },
-  { name: 'Mirrored' },
-  { name: 'Armanti Quality Food' },
+  { name: 'Mirrored', logo: '/images/logos/mirrored.png' },
+  { name: 'Armanti Quality Food', logo: '/images/logos/armanti.png' },
+  { name: 'eZone Electronics', logo: '/images/logos/ezone.png' },
   { name: 'Bloom Bank Africa' },
-  { name: 'eZone Electronics' },
 ];
 
 // Every logo sits directly on the black row — no white chips.
