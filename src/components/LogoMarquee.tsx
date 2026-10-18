@@ -56,13 +56,13 @@ export function LogoMarquee({
   const duplicatedLogos = [...logos, ...logos];
 
   return (
-    <section className="section-y bg-black overflow-hidden relative">
+    <section className="py-[var(--space-5)] bg-black overflow-hidden relative">
       {/* Heading follows the same eyebrow + display-face pattern as every
           other homepage section, so this block reads as part of the page
           rather than a component dropped in from elsewhere. */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-[var(--space-4)] relative z-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-red-400 mb-3">Clients</p>
-        <h2 className="font-display text-[clamp(2.2rem,4vw,3.6rem)] leading-[1.05] text-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-8 relative z-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-400 mb-2">Clients</p>
+        <h2 className="font-display text-[clamp(2rem,3.4vw,3.2rem)] leading-[1.05] text-white">
           Trusted by the names on the high street.
         </h2>
       </div>
@@ -77,7 +77,7 @@ export function LogoMarquee({
           {duplicatedLogos.map((logo, index) => (
             <div
               key={`logo-${index}`}
-              className="relative flex-shrink-0 w-40 h-20 transition-all duration-300 opacity-90 hover:opacity-100 hover:scale-110"
+              className="relative flex-shrink-0 w-32 h-14 transition-opacity duration-300 opacity-80 hover:opacity-100"
             >
               <Image
                 src={logo}
