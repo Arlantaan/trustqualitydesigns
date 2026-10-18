@@ -262,3 +262,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Homepage hero layout.
+   Mobile puts the photo between the headline and the body copy so a visitor
+   sees actual work in the first screen instead of scrolling through ~700px of
+   text. Desktop returns to the split: headline and body stacked on the left,
+   photo spanning both rows on the right. */
+.hero-grid {
+  display: grid;
+  grid-template-areas:
+    'head'
+    'photo'
+    'body';
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-areas:
+      'head photo'
+      'body photo';
+    grid-template-columns: minmax(0, 0.45fr) minmax(0, 0.55fr);
+  }
+}
