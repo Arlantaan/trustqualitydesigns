@@ -16,21 +16,21 @@ import Image from 'next/image';
 // was not actually a TQD job must be removed.
 type Client = { name: string; logo?: string };
 
+// The Jawara International Conference Centre and the OIC Banjul Summit are
+// deliberately NOT here: neither has a logo of its own — the summit work was a
+// billboard built for the event. They remain in the work mosaic on the homepage
+// and in caseStudies.ts, where the photograph is the credential.
 const CLIENTS: Client[] = [
-  // Named in src/data/caseStudies.ts
-  { name: 'Jawara International Conference Centre' },
-  { name: 'OIC Banjul Summit 2024' },
-  { name: 'Mirrored' },
-  { name: 'LinkUp Electronics', logo: '/images/logos/linkup-electronics.png' },
-  { name: 'Armanti Quality Food' },
-  // Identified from project photography in /public/images/websitepics
-  { name: 'Ecobank', logo: '/images/logos/ecobank-the-pan-african-bank-loho-HD.png'  },
+  { name: 'Ecobank', logo: '/images/logos/ecobank-the-pan-african-bank-loho-HD.png' },
   { name: 'GTBank', logo: '/images/logos/gtbank_logo.png' },
-  { name: 'OctopusTech', logo: '/images/logos/octopus-tech-logo-rebranded-white.png'  },
-  { name: 'GNPC' },
-  { name: 'Bloom Bank Africa' },
+  { name: 'OctopusTech', logo: '/images/logos/octopus-tech-logo-rebranded-white.png' },
+  { name: 'LinkUp Electronics', logo: '/images/logos/linkup-electronics.png' },
   { name: 'TAF Africa Global', logo: '/images/logos/taf-africa-global.png' },
-  { name: 'Zone Electronics' },
+  { name: 'GNPC' },
+  { name: 'Mirrored' },
+  { name: 'Armanti Quality Food' },
+  { name: 'Bloom Bank Africa' },
+  { name: 'eZone Electronics' },
 ];
 
 // Every logo sits directly on the black row — no white chips.
