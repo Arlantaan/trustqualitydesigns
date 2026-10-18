@@ -7,7 +7,7 @@ export { TeamCard, TeamGrid } from './TeamCard';
 export { ServiceCard, ServiceGrid } from './ServiceCard';
 export { TiltCard } from './TiltCard';
 export { AnimatedText, ShatterText, PaintReveal } from './AnimatedText';
-export { LogoMarquee } from './LogoMarquee';
+export { ClientRoster } from './ClientRoster';
 export { NewsUpdates } from './NewsUpdates';
 export { MarketingCTA } from './MarketingCTA';
 export { SectionReveal } from './SectionReveal';

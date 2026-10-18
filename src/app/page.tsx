@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { HeroSlideshow, LogoMarquee } from '@/components';
+import { HeroSlideshow, ClientRoster } from '@/components';
 
 // Homepage.
 //
@@ -215,7 +215,7 @@ export default function Home() {
         </div>
       </section>
 
-      <LogoMarquee />
+      <ClientRoster />
 
       {/* Process — a single compact row, not a half-page feature */}
       <section className="py-[var(--space-5)] bg-black border-t border-white/5">
