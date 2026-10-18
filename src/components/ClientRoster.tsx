@@ -26,7 +26,7 @@ const CLIENTS: Client[] = [
   { name: 'OctopusTech', logo: '/images/logos/octopus-tech-logo-rebranded-white.png' },
   { name: 'LinkUp Electronics', logo: '/images/logos/linkup-electronics.png' },
   { name: 'TAF Africa Global', logo: '/images/logos/taf-africa-global.png' },
-  { name: 'GNPC' },
+  { name: 'GNPC', logo: '/images/logos/gnpc.png' },
   { name: 'Mirrored' },
   { name: 'Armanti Quality Food' },
   { name: 'Bloom Bank Africa' },
