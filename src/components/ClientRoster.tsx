@@ -27,7 +27,6 @@ const CLIENTS: Client[] = [
   { name: 'LinkUp Electronics', logo: '/images/logos/linkup-electronics.png' },
   { name: 'TAF Africa Global', logo: '/images/logos/tafafrica.png' },
   { name: 'GNPC', logo: '/images/logos/gnpc.png' },
-  { name: 'Mirrored', logo: '/images/logos/mirrored.png' },
   { name: 'Armanti Quality Food', logo: '/images/logos/armanti.png' },
   { name: 'eZone Electronics', logo: '/images/logos/ezone.png' },
   { name: 'Bloom Bank Africa', logo: '/images/logos/bloombank.png' },

@@ -47,7 +47,7 @@ export default function AboutPage() {
             {[
               {
                 title: 'Quality First',
-                description: 'Premium materials and expert craftsmanship in every sign we create. No compromises on quality.',
+                description: 'Materials chosen to survive sun, salt air and rain, and work finished to last.',
               },
               {
                 title: 'Local Expertise',

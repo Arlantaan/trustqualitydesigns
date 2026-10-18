@@ -1,137 +1,85 @@
-import { ServiceGrid } from '@/components';
-import { CheckCircle, Award, Users, Zap } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import type { Metadata } from 'next';
-import type { ServiceOffering } from '@/types';
-import { PageHero, SectionReveal } from '@/components';
+import { PageHero } from '@/components';
+import { services } from '@/data/services';
 
 export const metadata: Metadata = {
   title: 'Services | Trust Quality Design',
-  description: 'Premium branding and signage solutions that transform your business presence.',
+  description:
+    'Signboards, 3D letters, totem and pylon signs, billboards, banners, printing, branded merchandise and vehicle branding — made and installed in The Gambia.',
   alternates: { canonical: '/services' },
 };
 
-// Mock services - replace with database calls
-const mockServices: ServiceOffering[] = [
-  {
-    id: '1',
-    name: 'Brand Identity Design',
-    slug: 'brand-identity',
-    description: 'Complete brand identity systems including logo, colors, typography, and brand guidelines.',
-    icon: 'Target',
-    features: ['logo design', 'brand guidelines', 'color palette', 'typography system', 'brand collateral'],
-  },
-  {
-    id: '2',
-    name: 'Channel Letter Signs',
-    slug: 'channel-letters',
-    description: 'Premium illuminated channel letters for storefronts and building facades.',
-    icon: 'Palette',
-    features: ['LED illumination', 'custom fonts', 'aluminum construction', 'weather resistant', 'installation'],
-  },
-  {
-    id: '3',
-    name: 'Monument & Pylon Signs',
-    slug: 'monument-signs',
-    description: 'Ground-mounted monument signs and tall pylon signs for maximum visibility.',
-    icon: 'Trending Up',
-    features: ['custom design', 'LED cabinets', 'stone or metal finish', 'landscaping integration', 'permits'],
-  },
-  {
-    id: '4',
-    name: 'Wayfinding Systems',
-    slug: 'wayfinding',
-    description: 'Comprehensive directional and informational signage for campuses and facilities.',
-    icon: 'Code',
-    features: ['site analysis', 'sign family design', 'ADA compliance', 'material selection', 'installation'],
-  },
-  {
-    id: '5',
-    name: 'Vehicle Graphics & Wraps',
-    slug: 'vehicle-graphics',
-    description: 'Eye-catching vehicle wraps and graphics that turn your fleet into mobile billboards.',
-    icon: 'FileText',
-    features: ['custom design', 'full wraps', 'partial graphics', 'fleet branding', 'professional installation'],
-  },
-  {
-    id: '6',
-    name: 'Interior Signage',
-    slug: 'interior-signage',
-    description: 'Professional interior signs including directories, room IDs, and branded environments.',
-    icon: 'BarChart3',
-    features: ['lobby signs', 'dimensional letters', 'ADA signage', 'acrylic displays', 'wall graphics'],
-  },
-];
-
+// Services come from src/data/services.ts, the single list shared with the
+// homepage. This page previously carried its own array marked "Mock services"
+// that disagreed with the homepage and with /api/services; all three are now
+// one list taken from TQD's own service poster.
+//
+// Removed from this page deliberately:
+//   - "Why Choose Us" with an Award-Winning Excellence claim nothing supports
+//   - a four-step process block duplicating the homepage word for word
+//   - gradient-filled headings used nowhere else on the site
 export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-black">
       <PageHero
-        title="Our Services"
-        subtitle="Premium branding and signage solutions that transform your business presence."
-        image="/images/websitepics/T_Q_D_16.jpg"
+        title="What we make"
+        subtitle="Signs, print and branded items — designed, produced and installed by our own team."
+        image="/images/websitepics/T_Q_D_12.jpg"
       />
 
-      {/* Why Choose Us */}
-      <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionReveal variant="scale">
-              <h2 className="text-5xl md:text-6xl font-black text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Why Choose Us</h2>
-            </SectionReveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { icon: Award, title: 'Award-Winning Excellence', description: 'Recognized for outstanding branding and signage construction across The Gambia.' },
-                { icon: Users, title: 'Expert Craftsmen', description: 'Skilled designers and builders dedicated to bringing your vision to life with precision.' },
-                { icon: Zap, title: 'Fast Turnaround', description: 'Efficient delivery times without compromising on quality or attention to detail.' },
-              ].map((item, i) => (
-                <SectionReveal key={i} variant="elevate" delay={i * 0.1}>
-                <div className="bg-gradient-to-br from-gray-900 to-gray-950 p-10 rounded-3xl border border-red-900/30 hover:border-red-500 hover:shadow-2xl hover:shadow-red-500/20 transition-all duration-300 hover:scale-105">
-                  <item.icon className="w-14 h-14 text-red-500 mb-6" />
-                  <h3 className="text-2xl font-bold text-red-400 mb-4">{item.title}</h3>
-                  <p className="text-gray-300 leading-relaxed">{item.description}</p>
+      <section className="py-[var(--space-5)]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-[var(--space-3)] gap-y-[var(--space-4)]">
+            {services.map((s) => (
+              <li key={s.slug}>
+                <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-white/10">
+                  <Image
+                    src={s.image}
+                    alt={s.alt}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
                 </div>
-                </SectionReveal>
-              ))}
-            </div>
+                <h2 className="mt-4 font-display text-2xl text-white">{s.name}</h2>
+                <p className="mt-1 text-gray-400 leading-relaxed">{s.blurb}</p>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {s.includes.map((item) => (
+                    <li
+                      key={item}
+                      className="text-xs text-gray-300 border border-white/15 rounded-full px-3 py-1"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="py-[var(--space-5)] bg-[#0a0a0a] border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div>
+            <h2 className="font-display text-[clamp(2rem,3.4vw,3.2rem)] leading-[1.05] text-white mb-2">
+              Not sure which you need?
+            </h2>
+            <p className="text-gray-300 max-w-xl">
+              Tell us what the sign is for and where it&apos;s going. We&apos;ll come out,
+              measure up and quote.
+            </p>
           </div>
-        </section>
-
-      {/* Services Grid */}
-      <section className="py-20 bg-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionReveal variant="fade">
-              <h2 className="text-5xl md:text-6xl font-black text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">What We Offer</h2>
-            </SectionReveal>
-            <ServiceGrid services={mockServices} />
-          </div>
-        </section>
-
-      {/* Process Section */}
-      <section className="py-20 md:py-32 bg-black relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <SectionReveal variant="scale">
-              <h2 className="text-5xl md:text-6xl font-black text-center mb-20 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">How We Work</h2>
-            </SectionReveal>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-              {[
-                { number: '01', title: 'Consultation', description: 'Free consultation to understand your brand vision and signage requirements.' },
-                { number: '02', title: 'Design', description: 'Custom design concepts that perfectly reflect your brand identity and goals.' },
-                { number: '03', title: 'Fabrication', description: 'Premium sign construction using quality materials and expert craftsmanship.' },
-                { number: '04', title: 'Installation', description: 'Professional installation with ongoing maintenance and support services.' },
-              ].map((step, i) => (
-                <SectionReveal key={step.number} variant="elevate" delay={i * 0.12}>
-                <div className="text-center group">
-                  <div className="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-br from-red-500 to-red-700 mb-6 group-hover:scale-125 transition-transform duration-300">{step.number}</div>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-red-400">{step.title}</h3>
-                  <p className="text-gray-300 text-lg leading-relaxed">{step.description}</p>
-                </div>
-                </SectionReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
+          <Link
+            href="/contact"
+            className="shrink-0 inline-flex items-center justify-center px-7 py-4 bg-red-600 hover:bg-red-500 text-white font-semibold rounded-full transition-colors"
+          >
+            Get a quote
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }
-

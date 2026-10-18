@@ -19,14 +19,17 @@ const bodyFont = Sora({
 
 const siteTitle = 'Trust Quality Design | Branding & Signage Construction';
 const siteDescription =
-  'Premium branding services and custom signage construction. We create powerful brand identities and build high-quality signs that elevate your business presence.';
-const socialImage = '/images/websitepics/T_Q_D_6.jpg';
+  'Signboards, 3D letters, totem and pylon signs, billboards, banners, printing and branded merchandise — made and installed in The Gambia since 2012.';
+// Landscape, and the most recognisable thing TQD has built. The previous
+// value was T_Q_D_6.jpg -- a portrait 810x1014 photo declared below as
+// 1200x630, so link previews cropped it badly.
+const socialImage = '/images/websitepics/T_Q_D_10.jpg';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: siteTitle,
   description: siteDescription,
-  keywords: ['branding company', 'signage construction', 'custom signs', 'brand identity', 'commercial signage', 'LED signs', 'monument signs', 'storefront signs'],
+  keywords: ['signage Gambia', 'signboards Banjul', 'billboard printing Gambia', '3D letters', 'totem signs', 'banner printing', 'branded merchandise', 'vehicle branding'],
   icons: {
     icon: '/t_q_d_LOGO.png',
     shortcut: '/t_q_d_LOGO.png',
@@ -38,7 +41,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: siteTitle,
     description: siteDescription,
-    images: [{ url: socialImage, width: 1200, height: 630, alt: SITE_NAME }],
+    images: [{ url: socialImage, width: 960, height: 719, alt: SITE_NAME }],
   },
   twitter: {
     card: 'summary_large_image',

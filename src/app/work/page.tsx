@@ -20,7 +20,7 @@ export default function WorkPage() {
     <main className="min-h-screen bg-black">
       <PageHero
         title="Our Work"
-        subtitle="Transforming brands across The Gambia with premium signage and creative solutions."
+        subtitle="Signs, billboards and vehicle branding built for businesses across The Gambia."
         image="/images/websitepics/T_Q_D_20.jpg"
       />
 

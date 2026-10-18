@@ -62,12 +62,17 @@ export function PageHero({ title, subtitle, image, dimAmount = 0.65 }: PageHeroP
         />
       </motion.div>
 
-      {/* Gradient overlays */}
+      {/* Legibility scrim.
+          The flat dim alone is not enough: these are photographs of SIGNS, and
+          signs are mostly large bright panels. On /services the white heading
+          landed on the white face of the GNPC sign and the middle word simply
+          vanished. The band below darkens the centre, where the heading sits,
+          independently of the image behind it. */}
       <div
         className="absolute inset-0"
         style={{ background: `rgba(0,0,0,${dimAmount})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/85" />
       <div className="absolute inset-0 bg-gradient-to-r from-red-950/30 to-transparent" />
 
       {/* Content */}

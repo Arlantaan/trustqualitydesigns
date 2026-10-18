@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { HeroSlideshow, ClientRoster } from '@/components';
+import { services } from '@/data/services';
 
 // Homepage.
 //
@@ -12,38 +13,6 @@ import { HeroSlideshow, ClientRoster } from '@/components';
 // labelled tiles, and the work as one dense asymmetric mosaic. Content renders
 // immediately -- no scroll-triggered reveals.
 
-const SERVICES = [
-  {
-    title: 'Fascia & 3D Letters',
-    image: '/images/websitepics/T_Q_D_11.jpg',
-    alt: 'Premier Banking by Ecobank fascia sign',
-  },
-  {
-    title: 'Pylon & Monument Signs',
-    image: '/images/websitepics/T_Q_D_13.jpg',
-    alt: 'GNPC pylon sign with stacked illuminated letters',
-  },
-  {
-    title: 'Billboards & Hoardings',
-    image: '/images/websitepics/T_Q_D_9.jpg',
-    alt: 'OIC Banjul Summit roadside billboards',
-  },
-  {
-    title: 'Vehicle Wraps',
-    image: '/images/websitepics/T_Q_D_22.jpg',
-    alt: 'Armanti Quality Food van in a full printed wrap',
-  },
-  {
-    title: 'Interior & Event Branding',
-    image: '/images/websitepics/T_Q_D_6.jpg',
-    alt: 'Mirrored interior feature wall graphics',
-  },
-  {
-    title: 'Retail & Point-of-Sale',
-    image: '/images/websitepics/T_Q_D_21.jpg',
-    alt: 'Nescafe branded floor display unit',
-  },
-];
 
 // Mosaic: the first tile spans two columns and two rows on desktop so the page
 // has a focal point instead of six identical rectangles.
@@ -157,8 +126,8 @@ export default function Home() {
             action={{ label: 'All services', href: '/services' }}
           />
           <ul className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-            {SERVICES.map((s) => (
-              <li key={s.title}>
+            {services.map((s) => (
+              <li key={s.slug}>
                 <Link
                   href="/services"
                   className="group relative block aspect-[4/3] overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-white/10"
@@ -172,7 +141,7 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
                   <h3 className="absolute inset-x-0 bottom-0 p-3 text-sm sm:text-base font-semibold text-white">
-                    {s.title}
+                    {s.name}
                   </h3>
                 </Link>
               </li>
