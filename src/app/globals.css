@@ -317,3 +317,22 @@ body {
     width: auto;
   }
 }
+
+/* No page may scroll sideways.
+   Transform-based reveals and hover effects are the usual cause: a
+   `hover:scale-110` on a tile that is full-width at phone size grows it past
+   the viewport, and framer variants that animate from a positive x offset
+   stick out to the right while they play. Both create a horizontal scrollbar
+   that appears and disappears as you scroll, which reads as the page being
+   broken.
+
+   `clip` rather than `hidden`: `overflow-x: hidden` on body turns it into a
+   scroll container, which silently breaks `position: sticky` elsewhere.
+   `clip` just refuses the overflow. The `hidden` line is the fallback for
+   browsers without `clip`. */
+html,
+body {
+  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
+}
