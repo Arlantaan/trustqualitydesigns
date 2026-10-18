@@ -30,7 +30,7 @@ const CLIENTS: Client[] = [
   { name: 'Mirrored', logo: '/images/logos/mirrored.png' },
   { name: 'Armanti Quality Food', logo: '/images/logos/armanti.png' },
   { name: 'eZone Electronics', logo: '/images/logos/ezone.png' },
-  { name: 'Bloom Bank Africa' },
+  { name: 'Bloom Bank Africa', logo: '/images/logos/bloombank.png' },
 ];
 
 // Every logo sits directly on the black row — no white chips.
