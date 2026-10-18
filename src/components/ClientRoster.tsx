@@ -29,7 +29,7 @@ const CLIENTS: Client[] = [
   { name: 'OctopusTech', logo: '/images/logos/octopus-tech-logo-rebranded-white.png'  },
   { name: 'GNPC' },
   { name: 'Bloom Bank Africa' },
-  { name: 'TAF Africa Global' },
+  { name: 'TAF Africa Global', logo: '/images/logos/taf-africa-global.png' },
   { name: 'Zone Electronics' },
 ];
 
